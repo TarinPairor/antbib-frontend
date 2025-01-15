@@ -19,7 +19,6 @@ export default function App() {
         {user && (
           <div>
             <p>Email: {user.primaryEmailAddress?.emailAddress}</p>
-            {/* Add other user data you want to display here */}
           </div>
         )}
       </SignedIn>
