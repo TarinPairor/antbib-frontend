@@ -21,7 +21,7 @@ export const fakeTasks = [
     Title: "Task 2",
     Assignee: "John Doe",
     Description: "Description for Task 2",
-    Status: "in_progress",
+    Status: "developing",
     Tags: "meeting,urgent",
     StartDate: "2023-10-01",
     EndDate: "2023-10-15",

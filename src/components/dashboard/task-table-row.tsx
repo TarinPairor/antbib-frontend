@@ -75,7 +75,7 @@ export default function TaskTableRow({ task, onUpdate }: TaskTableRowProps) {
             variant={`${
               task.Status === "todo"
                 ? "red"
-                : task.Status === "in_progress"
+                : task.Status === "developing"
                 ? "yellow"
                 : "green"
             }`}
@@ -86,7 +86,7 @@ export default function TaskTableRow({ task, onUpdate }: TaskTableRowProps) {
         <TableCell>{task.Priority}</TableCell>
         <TableCell>
           {task.Tags.split(",").map((tag) => (
-            <Badge key={tag} className="bg-gray-200 text-gray-800">
+            <Badge key={tag} className="bg-gray-200 text-gray-800 p-1 m-1">
               {tag}
             </Badge>
           ))}
@@ -121,13 +121,27 @@ export default function TaskTableRow({ task, onUpdate }: TaskTableRowProps) {
               className="mb-2"
             />
             <Select
+              defaultValue={editedTask.Assignee}
+              onValueChange={(value) =>
+                setEditedTask({ ...editedTask, Assignee: value })
+              }
+            >
+              <SelectTrigger>{editedTask.Assignee}</SelectTrigger>
+              <SelectContent>
+                <SelectItem value="John Doe">Tarin</SelectItem>
+                <SelectItem value="Jane Doe">Jane Doe</SelectItem>
+                <SelectItem value="John Smith">John Smith</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
               defaultValue={editedTask.Status}
               onValueChange={handleStatusChange}
             >
               <SelectTrigger>{editedTask.Status}</SelectTrigger>
               <SelectContent>
                 <SelectItem value="todo">To Do</SelectItem>
-                <SelectItem value="in_progress">In Progress</SelectItem>
+                <SelectItem value="developing">Developing</SelectItem>
                 <SelectItem value="done">Done</SelectItem>
               </SelectContent>
             </Select>

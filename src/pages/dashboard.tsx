@@ -33,21 +33,27 @@ export default function Dashboard() {
     [key: string]: Task[];
   } = {
     todo: tasks.filter((task) => task.Status === "todo"),
-    in_progress: tasks.filter((task) => task.Status === "in_progress"),
+    developing: tasks.filter((task) => task.Status === "developing"),
     done: tasks.filter((task) => task.Status === "done"),
   };
 
+  console.log(groupedTasks);
+
   return (
-    <div className="font-poppins p-4">
+    <div className="w-full">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      <Accordion type="multiple" defaultValue={["todo", "in_progress", "done"]}>
+      <Accordion
+        type="multiple"
+        defaultValue={["todo", "developing", "done"]}
+        className="w-full"
+      >
         {Object.keys(groupedTasks).map((status) => (
           <AccordionItem value={status} key={status}>
-            <AccordionTrigger>
+            <AccordionTrigger className="w-full">
               {status.replace("_", " ").toUpperCase()}
             </AccordionTrigger>
-            <AccordionContent>
-              <Table className="mb-4">
+            <AccordionContent className="w-full">
+              <Table className="mb-4 w-full">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Title</TableHead>
