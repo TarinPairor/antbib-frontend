@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fakeTasks } from "@/constants/Tasks";
+import { fakeTasks } from "@/constants/constants";
 import { Task } from "@/interfaces/types";
 
 import {
@@ -37,7 +37,7 @@ export default function Dashboard() {
     done: tasks.filter((task) => task.Status === "done"),
   };
 
-  console.log(groupedTasks);
+  //   console.log(groupedTasks);
 
   return (
     <div className="w-full">

@@ -14,7 +14,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
-            <a href="/home">Home</a>
+            <a href="/">Home</a>
           </SidebarGroupLabel>
           <SidebarGroupLabel>
             <a href="/inbox">Inbox</a>
