@@ -15,7 +15,7 @@ import { Task } from "@/interfaces/types";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const fetchAPI = async () => {
-  const res = await fetch(`${backendUrl}/api/`);
+  const res = await fetch(`${backendUrl}/supabase_healthcheck/`);
   const data = await res.json();
   console.log(data);
 };
