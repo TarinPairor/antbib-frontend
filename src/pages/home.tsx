@@ -12,7 +12,16 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Task } from "@/interfaces/types";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+const fetchAPI = async () => {
+  const res = await fetch(`${backendUrl}/api/`);
+  const data = await res.json();
+  console.log(data);
+};
+
 export default function Home() {
+  fetchAPI();
   const userTasks = fakeTasks.filter((task) => task.AssignedTo === 1);
   const upcomingTasks = fakeTasks.filter(
     (task) => new Date(task.StartDate) > new Date()
