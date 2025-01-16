@@ -1,51 +1,90 @@
-# React + TypeScript + Vite
+# Task Management System (AntBib)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a comprehensive task and meeting management system designed for enhanced productivity and streamlined operations. It is tailored to meet the needs of organizations, including support for multilingual tasks and grant management integration.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core Features
 
-## Expanding the ESLint configuration
+1. **Meeting Scheduling**: Arrange meetings with authors, publishers, and event partners.
+2. **Automated Follow-Ups**: Send follow-up tasks to collaborators or team members post-meetings.
+3. **Reminders and Notifications**: Automate reminders for key events like book launches, workshops, and committee meetings.
+4. **Email Thread Summaries**: Generate concise summaries of email discussions for efficient decision-making.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## User Stories
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. **Task Management**:
+   - As a user, I can create tasks with timelines, assign them to others, and mark them as complete.
+   - I can view tasks in different statuses: To-Do, Developing, Done, and Overdue.
+   - I can filter tasks by tags, priority, and dates.
+2. **Dashboard**:
+   - As a user I can view a large dashboard with a categorized list of tasks and meetings.
+   - Tasks are tagged with statuses and display upcoming deadlines.
+3. **Notifications**:
+   - I can receive notifications for new assignments and updates (Not yet).
+   - I can rack overdue or upcoming tasks using badges and reminders.
+4. **Calendar View**:
+   - I can visualize tasks in a calendar format and filter tasks by spaces or assignees.
+5. **Task Details**:
+   - I can lick on tasks to view and edit details such as title, description, status, tags, and assignees.
+6. **Email Summary**:
+   - I can opy and paste email threads for AI-generated summaries.
+
+---
+
+## Database Schema
+
+### User Table
+
+```sql
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR(50), -- Customizable username
+    user_email VARCHAR(255) NOT NULL UNIQUE -- Clerk-managed email
+);
+
+CREATE TABLE tasks (
+    task_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    status VARCHAR(20) NOT NULL DEFAULT 'todo', -- todo, in_progress, done
+    tags TEXT, -- comma-separated tags like 'meeting,urgent'
+    start_date DATE, -- Can be NULL for open-ended tasks
+    end_date DATE NOT NULL,
+    priority VARCHAR(20), -- e.g., low, medium, high
+    created_by INT REFERENCES antbib_users(user_id) ON DELETE CASCADE,
+    assigned_to INT REFERENCES antbib_users(user_id) ON DELETE SET NULL
+);
+
+CREATE TABLE subtasks (
+    subtask_id SERIAL PRIMARY KEY,
+    task_id INT REFERENCES antbib_tasks(task_id) ON DELETE CASCADE,
+    title VARCHAR(100) NOT NULL,
+    is_completed BOOLEAN DEFAULT FALSE
+);
+
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Application Flow
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **User Login/Signup**:
+  - Users log in or sign up with their email and password.
+- **Dashboard**:
+  - Displays categorized tasks and meetings (e.g., `todo`, `in_progress`, `done`, `overdue`).
+- **Task Details**:
+  - Allows users to view and update task details, including subtasks, assignees, and tags.
+- **Notifications**:
+  - Provides updates on task changes or assignments.
+- **Calendar View**:
+  - Visualizes tasks and deadlines.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# antbib-frontend
+## Future Enhancements
+
+- **Spaces**: Create separate spaces for individual subgroups.
+- **Task Assignment**: Allow tasks to be assigned to multiple users.
+- **Enhanced Filters**: Add more filters for tasks and calendar views.
+- **Calendar Integration**: Add a calendar integration for task visualization.
+
+Get the link to the project [here](https://antbib.vercel.app/)!
