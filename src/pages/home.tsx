@@ -26,54 +26,31 @@ import {
 import { useEffect } from "react";
 
 export default function Home() {
-  const { isLoaded: isClerkLoaded, user: clerkUser } = useUser();
-  const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
+  const { isLoaded: isClerkLoaded, user: clerkUser } = useUser(); // Ensure Clerk is fully loaded
+  console.log("clerkUser", clerkUser);
+  const userEmail = clerkUser?.primaryEmailAddress?.emailAddress || "";
+  console.log("userEmail in home.tsx", userEmail);
 
-  // Only fetch user data when Clerk is loaded and we have an email
-  const {
-    data: user,
-    isLoading: isUserLoading,
-    error: userError,
-    refetch: refetchUser,
-  } = useGetUserByEmail(userEmail || "");
-
-  const userId = user?.user_id;
-
-  // Only fetch tasks when we have a userId
-  const {
-    data: userTasks = [],
-    isPending: isTasksPending,
-    refetch: refetchTasks,
-  } = useGetTasksByUserId(userId || 0);
-
-  const { data: tags = [] } = useGetTagsByUserId(userId || 0);
-
-  // Refetch data when component mounts or when coming back to the page
   useEffect(() => {
-    if (userEmail) {
-      refetchUser();
-    }
-    if (userId) {
-      refetchTasks();
-    }
-  }, [userEmail, userId, refetchUser, refetchTasks]);
+    setTimeout(() => {
+      console.log("clerkUser in home.tsx", clerkUser);
+    }, 1000);
+  }, [clerkUser]);
 
-  // Handle loading states
-  if (!isClerkLoaded) {
-    return <div>Loading authentication...</div>;
-  }
+  // Fetch user by email
+  const { data: user, isLoading: isUserLoading } = useGetUserByEmail(userEmail);
+  console.log("user in home.tsx", user);
 
-  if (!userEmail) {
-    return <div>Please sign in to continue</div>;
-  }
+  // Extract userId, wait for user to load
+  const userId = user?.user_id;
+  console.log("userId in home.tsx", userId);
 
-  if (isUserLoading || isTasksPending) {
-    return <div>Loading your data...</div>;
-  }
+  // Fetch tasks based on userId
+  const { data: userTasks = [], isPending: isTasksPending } =
+    useGetTasksByUserId(userId || 0);
+  console.log("userTasks in home.tsx", userTasks);
 
-  if (userError) {
-    return <div>Error loading user data. Please refresh the page.</div>;
-  }
+  const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
 
   // Handle loading states
   if (!isClerkLoaded || isUserLoading) {
