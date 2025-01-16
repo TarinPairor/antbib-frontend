@@ -26,19 +26,21 @@ import {
 
 export default function Home() {
   const { isLoaded: isClerkLoaded, user: clerkUser } = useUser(); // Ensure Clerk is fully loaded
+  console.log("clerkUser", clerkUser);
   const userEmail = clerkUser?.primaryEmailAddress?.emailAddress || "";
 
   // Fetch user by email
   const { data: user, isLoading: isUserLoading } = useGetUserByEmail(userEmail);
+  console.log("user in home.tsx", user);
 
   // Extract userId, wait for user to load
   const userId = user?.user_id;
-
   console.log("userId in home.tsx", userId);
 
   // Fetch tasks based on userId
   const { data: userTasks = [], isPending: isTasksPending } =
     useGetTasksByUserId(userId || 0);
+  console.log("userTasks in home.tsx", userTasks);
 
   const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
 
@@ -50,11 +52,6 @@ export default function Home() {
   if (isTasksPending) {
     return <div>Loading tasks...</div>;
   }
-
-  // Debugging logs for hosted environment
-  console.log("clerkUser", clerkUser);
-  console.log("user", user);
-  console.log("userTasks", userTasks);
 
   const upcomingTasks = userTasks.filter(
     (task) => new Date(task.end_date) > new Date()
