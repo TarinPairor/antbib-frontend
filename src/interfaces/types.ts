@@ -1,20 +1,33 @@
 export interface Task {
-  TaskID: number;
-  Assignee: string;
-  Title: string;
-  Description: string;
-  Status: string;
-  Tags: string;
-  StartDate: string;
-  EndDate: string;
-  Priority: string;
-  CreatedBy: number;
-  AssignedTo: number;
-  Subtasks: Subtask[];
+  task_id: number;
+  title: string;
+  description: string;
+  status: string;
+  tags: string;
+  start_date: string;
+  end_date: string;
+  priority: string;
+  created_by: number;
+  assigned_to: number;
+  subtasks: Subtask[];
 }
 
-interface Subtask {
-  SubtaskID: number;
-  Title: string;
-  IsCompleted: boolean;
+export interface Subtask {
+  subtask_id: number;
+  title: string;
+  is_completed: boolean;
+}
+
+export interface Notification {
+  notification_id: number;
+  user_id: number;
+  message: string;
+  created_at: string;
+  is_read: boolean;
+}
+
+export interface User {
+  user_id: number;
+  username: string;
+  user_email: string;
 }

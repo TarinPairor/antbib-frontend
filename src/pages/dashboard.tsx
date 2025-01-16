@@ -24,7 +24,7 @@ export default function Dashboard() {
   const handleUpdateTask = (updatedTask: Task) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.TaskID === updatedTask.TaskID ? updatedTask : task
+        task.task_id === updatedTask.task_id ? updatedTask : task
       )
     );
   };
@@ -32,9 +32,9 @@ export default function Dashboard() {
   const groupedTasks: {
     [key: string]: Task[];
   } = {
-    todo: tasks.filter((task) => task.Status === "todo"),
-    developing: tasks.filter((task) => task.Status === "developing"),
-    done: tasks.filter((task) => task.Status === "done"),
+    todo: tasks.filter((task) => task.status === "todo"),
+    developing: tasks.filter((task) => task.status === "developing"),
+    done: tasks.filter((task) => task.status === "done"),
   };
 
   //   console.log(groupedTasks);
@@ -67,7 +67,7 @@ export default function Dashboard() {
                 <TableBody>
                   {groupedTasks[status].map((task) => (
                     <TaskTableRow
-                      key={task.TaskID}
+                      key={task.task_id}
                       task={task}
                       onUpdate={handleUpdateTask}
                     />

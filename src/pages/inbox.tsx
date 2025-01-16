@@ -10,7 +10,7 @@ import { fakeNotifications } from "@/constants/constants";
 
 export default function Inbox() {
   const userNotifications = fakeNotifications.filter(
-    (notification) => notification.UserID === 2
+    (notification) => notification.user_id === 2
   );
 
   return (
@@ -27,15 +27,15 @@ export default function Inbox() {
           </TableHeader>
           <TableBody>
             {userNotifications.map((notification) => (
-              <TableRow key={notification.NotificationID}>
+              <TableRow key={notification.notification_id}>
                 <TableCell className="py-2 px-4 border-b">
-                  {notification.Message}
+                  {notification.message}
                 </TableCell>
                 <TableCell className="py-2 px-4 border-b">
-                  {new Date(notification.CreatedAt).toLocaleString()}
+                  {new Date(notification.created_at).toLocaleString()}
                 </TableCell>
                 <TableCell className="py-2 px-4 border-b">
-                  {notification.IsRead ? "Read" : "Unread"}
+                  {notification.is_read ? "Read" : "Unread"}
                 </TableCell>
               </TableRow>
             ))}

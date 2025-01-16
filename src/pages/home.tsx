@@ -22,12 +22,12 @@ const fetchAPI = async () => {
 
 export default function Home() {
   fetchAPI();
-  const userTasks = fakeTasks.filter((task) => task.AssignedTo === 1);
+  const userTasks = fakeTasks.filter((task) => task.assigned_to === 1);
   const upcomingTasks = fakeTasks.filter(
-    (task) => new Date(task.StartDate) > new Date()
+    (task) => new Date(task.start_date) > new Date()
   );
   const tags = userTasks
-    .map((task) => task.Tags.split(","))
+    .map((task) => task.tags.split(","))
     .flat()
     .slice(0, 3);
 
@@ -49,23 +49,23 @@ export default function Home() {
           </TableHeader>
           <TableBody>
             {userTasks.map((task) => (
-              <TableRow key={task.TaskID}>
-                <TableCell>{task.Title}</TableCell>
-                <TableCell>{task.Description}</TableCell>
+              <TableRow key={task.task_id}>
+                <TableCell>{task.title}</TableCell>
+                <TableCell>{task.description}</TableCell>
                 <TableCell
                   className={cn(
-                    task.Status === "todo" ? "text-red-500" : "",
-                    task.Status === "developing" ? "text-yellow-500" : "",
-                    task.Status === "done" ? "text-green-500" : ""
+                    task.status === "todo" ? "text-red-500" : "",
+                    task.status === "in_progress" ? "text-yellow-500" : "",
+                    task.status === "done" ? "text-green-500" : ""
                   )}
                 >
-                  {task.Status}
+                  {task.status}
                 </TableCell>
-                <TableCell>{task.StartDate}</TableCell>
-                <TableCell>{task.EndDate || "N/A"}</TableCell>
-                <TableCell>{task.Priority}</TableCell>
+                <TableCell>{task.start_date}</TableCell>
+                <TableCell>{task.end_date || "N/A"}</TableCell>
+                <TableCell>{task.priority}</TableCell>
                 <TableCell>
-                  {task.Tags.split(",").map((tag) => (
+                  {task.tags.split(",").map((tag) => (
                     <Badge
                       key={tag}
                       className="bg-gray-200 text-gray-800 p-1 m-1"
@@ -96,23 +96,23 @@ export default function Home() {
           </TableHeader>
           <TableBody>
             {upcomingTasks.map((task) => (
-              <TableRow key={task.TaskID}>
-                <TableCell>{task.Title}</TableCell>
-                <TableCell>{task.Description}</TableCell>
+              <TableRow key={task.task_id}>
+                <TableCell>{task.title}</TableCell>
+                <TableCell>{task.description}</TableCell>
                 <TableCell
                   className={cn(
-                    task.Status === "todo" ? "text-red-500" : "",
-                    task.Status === "developing" ? "text-yellow-500" : "",
-                    task.Status === "done" ? "text-green-500" : ""
+                    task.status === "todo" ? "text-red-500" : "",
+                    task.status === "in_progress" ? "text-yellow-500" : "",
+                    task.status === "done" ? "text-green-500" : ""
                   )}
                 >
-                  {task.Status}
+                  {task.status}
                 </TableCell>
-                <TableCell>{task.StartDate}</TableCell>
-                <TableCell>{task.EndDate || "N/A"}</TableCell>
-                <TableCell>{task.Priority}</TableCell>
+                <TableCell>{task.start_date}</TableCell>
+                <TableCell>{task.end_date || "N/A"}</TableCell>
+                <TableCell>{task.priority}</TableCell>
                 <TableCell>
-                  {task.Tags.split(",").map((tag) => (
+                  {task.tags.split(",").map((tag) => (
                     <Badge
                       key={tag}
                       className="bg-gray-200 text-gray-800 p-1 m-1"
@@ -139,7 +139,7 @@ export default function Home() {
         {tags.map((tag) => (
           <TabsContent key={tag} value={tag}>
             <TaskTable
-              tasks={userTasks.filter((task) => task.Tags.includes(tag))}
+              tasks={userTasks.filter((task) => task.tags.includes(tag))}
             />
           </TabsContent>
         ))}
@@ -149,22 +149,22 @@ export default function Home() {
       <Tabs>
         <TabsList>
           <TabsTrigger value="todo">Todo</TabsTrigger>
-          <TabsTrigger value="developing">Developing</TabsTrigger>
+          <TabsTrigger value="in_progress">In Progress</TabsTrigger>
           <TabsTrigger value="done">Done</TabsTrigger>
         </TabsList>
         <TabsContent value="todo">
           <TaskTable
-            tasks={userTasks.filter((task) => task.Status === "todo")}
+            tasks={userTasks.filter((task) => task.status === "todo")}
           />
         </TabsContent>
-        <TabsContent value="developing">
+        <TabsContent value="in_progress">
           <TaskTable
-            tasks={userTasks.filter((task) => task.Status === "developing")}
+            tasks={userTasks.filter((task) => task.status === "in_progress")}
           />
         </TabsContent>
         <TabsContent value="done">
           <TaskTable
-            tasks={userTasks.filter((task) => task.Status === "done")}
+            tasks={userTasks.filter((task) => task.status === "done")}
           />
         </TabsContent>
       </Tabs>
@@ -189,23 +189,23 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
         </TableHeader>
         <TableBody>
           {tasks.map((task: Task) => (
-            <TableRow key={task.TaskID}>
-              <TableCell>{task.Title}</TableCell>
-              <TableCell>{task.Description}</TableCell>
+            <TableRow key={task.task_id}>
+              <TableCell>{task.title}</TableCell>
+              <TableCell>{task.description}</TableCell>
               <TableCell
                 className={cn(
-                  task.Status === "todo" ? "text-red-500" : "",
-                  task.Status === "developing" ? "text-yellow-500" : "",
-                  task.Status === "done" ? "text-green-500" : ""
+                  task.status === "todo" ? "text-red-500" : "",
+                  task.status === "in_progress" ? "text-yellow-500" : "",
+                  task.status === "done" ? "text-green-500" : ""
                 )}
               >
-                {task.Status}
+                {task.status}
               </TableCell>
-              <TableCell>{task.StartDate}</TableCell>
-              <TableCell>{task.EndDate || "N/A"}</TableCell>
-              <TableCell>{task.Priority}</TableCell>
+              <TableCell>{task.start_date}</TableCell>
+              <TableCell>{task.end_date || "N/A"}</TableCell>
+              <TableCell>{task.priority}</TableCell>
               <TableCell>
-                {task.Tags.split(",").map((tag) => (
+                {task.tags.split(",").map((tag) => (
                   <Badge
                     key={tag}
                     className="bg-gray-200 text-gray-800 p-1 m-1"
