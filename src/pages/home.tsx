@@ -51,7 +51,6 @@ export default function Home() {
     return <div>Loading tasks...</div>;
   }
 
-  // Debugging logs for hosted environment
   console.log("clerkUser", clerkUser);
   console.log("user", user);
   console.log("userTasks", userTasks);
