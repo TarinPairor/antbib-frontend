@@ -29,6 +29,8 @@ export default function Home() {
   const { data: user } = useGetUserByEmail(
     clerkUser?.primaryEmailAddress?.emailAddress || ""
   );
+  console.log("clerkUser", clerkUser);
+  console.log("user", user);
   const { data: userTasks = fakeTasks, isPending } = useGetTasksByUserId(
     user?.user_id || 0
   );

@@ -26,6 +26,9 @@ export const useGetTasksByUserId = (userId: number) => {
       const data = await res.json();
       return data;
     },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: false, // Prevent refetching on window focus
+    refetchOnMount: false, // Prevent refetching when component mounts
   });
 };
 
