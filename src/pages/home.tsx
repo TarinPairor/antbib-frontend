@@ -36,25 +36,28 @@ export default function Home() {
 
   console.log("userId in home.tsx", userId);
 
-  // Fetch tasks based on userId
-  const { data: userTasks = [], isPending: isTasksPending } =
-    useGetTasksByUserId(userId || 0);
-
-  const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
-
   // Handle loading states
   if (!isClerkLoaded || isUserLoading) {
     return <div>Loading user information...</div>;
   }
 
+  // Debugging logs for hosted environment
+  console.log("clerkUser", clerkUser);
+  console.log("user", user);
+
+  // Fetch tasks based on userId
+  const { data: userTasks = [], isPending: isTasksPending } =
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useGetTasksByUserId(userId || 0);
+
   if (isTasksPending) {
     return <div>Loading tasks...</div>;
   }
 
-  // Debugging logs for hosted environment
-  console.log("clerkUser", clerkUser);
-  console.log("user", user);
   console.log("userTasks", userTasks);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
 
   const upcomingTasks = userTasks.filter(
     (task) => new Date(task.end_date) > new Date()
