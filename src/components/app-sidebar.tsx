@@ -14,21 +14,35 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
-            <a href="/">Home</a>
+            <a className="text-lg" href="/">
+              Home
+            </a>
           </SidebarGroupLabel>
           <SidebarGroupLabel>
-            <a href="/inbox">Inbox</a>
+            <a className="text-lg" href="/inbox">
+              Inbox
+            </a>
+          </SidebarGroupLabel>
+
+          <SidebarGroupLabel>
+            <a className="text-lg" href="/calendar">
+              Calendar
+            </a>
           </SidebarGroupLabel>
           <SidebarGroupLabel>
-            <a href="/calendar">Calendar</a>
-          </SidebarGroupLabel>
-          <SidebarGroupLabel>
-            <a href="/settings">Settings</a>
+            <a className="text-lg" href="/settings">
+              Settings
+            </a>
           </SidebarGroupLabel>
         </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>
-            <a href="/dashboard">Dashboard</a>
+            <a className="text-lg" href="/dashboard">
+              Dashboard
+            </a>
+          </SidebarGroupLabel>
+          <SidebarGroupLabel>
+            <p className="text-lg">Create Task</p>
           </SidebarGroupLabel>
         </SidebarGroup>
       </SidebarContent>

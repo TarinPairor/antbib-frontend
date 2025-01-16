@@ -19,11 +19,12 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <SidebarProvider>
+            <Login />
             <AppSidebar />
             <SidebarTrigger />
             <Router>
               <Routes>
-                <Route path="/login" element={<Login />} />
+                {/* <Route path="/login" element={<Login />} /> */}
                 <Route path="/" element={<Home />} />
                 <Route path="/inbox" element={<Inbox />} />
                 <Route path="/calendar" element={<Calendar />} />

@@ -9,7 +9,7 @@ export interface Task {
   priority: string;
   created_by: number;
   assigned_to: number;
-  subtasks: Subtask[];
+  // subtasks: Subtask[];
 }
 
 export interface Subtask {

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { fakeTasks } from "@/constants/constants";
 import { Task } from "@/interfaces/types";
 
 import {
@@ -17,24 +15,29 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import TaskTableRow from "@/components/dashboard/task-table-row";
+import { useGetAllTasks } from "@/apis/tasks";
+// import { fakeTasks } from "@/constants/constants";
 
 export default function Dashboard() {
-  const [tasks, setTasks] = useState<Task[]>(fakeTasks);
+  // const [tasks, setTasks] = useState<Task[]>(fakeTasks);
+  // const { data: tasks = fakeTasks } = useGetAllTasks();
+  const { data: tasks } = useGetAllTasks();
 
-  const handleUpdateTask = (updatedTask: Task) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.task_id === updatedTask.task_id ? updatedTask : task
-      )
-    );
-  };
+  // const handleUpdateTask = (updatedTask: Task) => {
+  //   console.log(updatedTask);
+  //   // setTasks((prevTasks) =>
+  //   //   prevTasks.map((task) =>
+  //   //     task.task_id === updatedTask.task_id ? updatedTask : task
+  //   //   )
+  //   // );
+  // };
 
   const groupedTasks: {
-    [key: string]: Task[];
+    [key: string]: Task[] | undefined;
   } = {
-    todo: tasks.filter((task) => task.status === "todo"),
-    developing: tasks.filter((task) => task.status === "developing"),
-    done: tasks.filter((task) => task.status === "done"),
+    todo: tasks?.filter((task) => task.status === "todo"),
+    developing: tasks?.filter((task) => task.status === "developing"),
+    done: tasks?.filter((task) => task.status === "done"),
   };
 
   //   console.log(groupedTasks);
@@ -65,12 +68,8 @@ export default function Dashboard() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {groupedTasks[status].map((task) => (
-                    <TaskTableRow
-                      key={task.task_id}
-                      task={task}
-                      onUpdate={handleUpdateTask}
-                    />
+                  {groupedTasks[status]?.map((task) => (
+                    <TaskTableRow key={task.task_id} task={task} />
                   ))}
                 </TableBody>
               </Table>

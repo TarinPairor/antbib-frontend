@@ -5,11 +5,36 @@ import {
   UserButton,
   useUser,
 } from "@clerk/clerk-react";
+import { useEffect, useState } from "react";
+import { useCreateUser, useGetUserIdByEmail } from "@/apis/users";
 
 export default function Login() {
   const { user } = useUser();
+  const createUserMutation = useCreateUser();
+  const [isUserCreated, setIsUserCreated] = useState(false);
+
+  const { data: userId } = useGetUserIdByEmail(
+    user?.primaryEmailAddress?.emailAddress || ""
+  );
+
+  useEffect(() => {
+    if (user && !isUserCreated && !userId) {
+      const newUser = {
+        username: user.firstName || user.username || "Anonymous",
+        user_email: user.primaryEmailAddress?.emailAddress || "",
+      };
+
+      createUserMutation.mutate(newUser, {
+        onSuccess: () => {
+          setIsUserCreated(true);
+          // Crash the server after creating the user
+        },
+      });
+    }
+  }, [user, isUserCreated, userId, createUserMutation]);
+
   return (
-    <header>
+    <div className="absolute top-0 right-0 p-4">
       <SignedOut>
         <SignInButton />
       </SignedOut>
@@ -17,10 +42,11 @@ export default function Login() {
         <UserButton />
         {user && (
           <div>
-            <p>Email: {user.primaryEmailAddress?.emailAddress}</p>
+            <p>Hi {user.firstName}</p>
+            {/* <p>Email: {user.primaryEmailAddress?.emailAddress}</p> */}
           </div>
         )}
       </SignedIn>
-    </header>
+    </div>
   );
 }
