@@ -137,7 +137,6 @@ export default function Dashboard() {
           </AccordionItem>
         ))}
       </Accordion>
-
       <Dialog open={isModalVisible} onOpenChange={setIsModalVisible}>
         <DialogTrigger asChild>
           <Button className="hidden">Open Dialog</Button>

@@ -41,9 +41,11 @@ export function AppSidebar() {
               Dashboard
             </a>
           </SidebarGroupLabel>
-          {/* <SidebarGroupLabel>
-            <p className="text-lg">Create Task</p>
-          </SidebarGroupLabel> */}
+          <SidebarGroupLabel>
+            <a className="text-lg" href="/email-thread-summarizer">
+              Email Summary
+            </a>
+          </SidebarGroupLabel>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />

@@ -10,6 +10,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import EmailThreadSummarizer from "./pages/email-thread-summarizer";
 
 export default function App() {
   const queryClient = new QueryClient({
@@ -39,6 +40,10 @@ export default function App() {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route
+                  path="/email-thread-summarizer"
+                  element={<EmailThreadSummarizer />}
+                />
               </Routes>
             </Router>
           </SidebarProvider>
