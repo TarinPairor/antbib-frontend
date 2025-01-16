@@ -2,10 +2,10 @@ import { useState } from "react";
 import {
   TableRow,
   TableCell,
-  Table,
-  TableHeader,
-  TableBody,
-  TableHead,
+  // Table,
+  // TableHeader,
+  // TableBody,
+  // TableHead,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,8 +27,8 @@ import {
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Textarea } from "@/components/ui/textarea";
-import { useUpdateTask } from "@/apis/tasks";
-import { useGetAllUsers } from "@/apis/users";
+import { useDeleteTask, useUpdateTask } from "@/apis/tasks";
+import { useGetAllUsers, useGetUserById } from "@/apis/users";
 import { textWithEllipsis } from "@/lib/utils";
 
 interface TaskTableRowProps {
@@ -36,11 +36,13 @@ interface TaskTableRowProps {
 }
 
 export default function TaskTableRow({ task }: TaskTableRowProps) {
-  // console.log(task);
   const { data: allUsers } = useGetAllUsers();
+  const { data: user } = useGetUserById(task.assigned_to);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editedTask, setEditedTask] = useState<Task>(task);
   const { mutate: updateTask } = useUpdateTask();
+  const { mutate: deleteTask } = useDeleteTask();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -55,17 +57,24 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
     setIsModalVisible(false);
   };
 
+  const handleDelete = () => {
+    deleteTask(editedTask.task_id);
+    setIsModalVisible(false);
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setEditedTask({ ...editedTask, [name]: value });
-    // updateTask({ ...editedTask, [name]: value });
   };
 
   const handleStatusChange = (value: string) => {
     setEditedTask({ ...editedTask, status: value });
-    // updateTask({ ...editedTask, status: value });
+  };
+
+  const handleAssigneeChange = (value: string) => {
+    setEditedTask({ ...editedTask, assigned_to: parseInt(value) });
   };
 
   return (
@@ -86,7 +95,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
             {task.status}
           </Badge>
         </TableCell>
-        <TableCell>{task.priority}</TableCell>
+        <TableCell>{user?.username}</TableCell>
         <TableCell>
           {task?.tags
             ?.split(",")
@@ -127,13 +136,12 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
               onChange={handleChange}
               className="mb-2"
             />
+            <p>Assigned To</p>
             <Select
-            // defaultValue={editedTask.assigned_to.toString()}
-            // onValueChange={(value) =>
-            //   setEditedTask({ ...editedTask, assigned_to: parseInt(value) })
-            // }
+              defaultValue={task?.assigned_to?.toString()}
+              onValueChange={handleAssigneeChange}
             >
-              <SelectTrigger>{editedTask.assigned_to}</SelectTrigger>
+              <SelectTrigger>{user?.username}</SelectTrigger>
               <SelectContent>
                 {allUsers?.map((user) => (
                   <SelectItem
@@ -145,7 +153,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                 ))}
               </SelectContent>
             </Select>
-
+            <p>Status</p>
             <Select
               defaultValue={editedTask.status}
               onValueChange={handleStatusChange}
@@ -179,14 +187,15 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                 }
               />
             </>
+            <p>Tags</p>
             <Input
               name="tags"
               placeholder="Tags"
-              value={editedTask.tags}
+              value={editedTask.tags || ""}
               onChange={handleChange}
               className="mb-2"
             />
-            <h3 className="font-bold mb-2">Subtasks</h3>
+            {/* <h3 className="font-bold mb-2">Subtasks</h3>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -195,7 +204,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* {editedTask.subtasks.map((subtask) => (
+                {editedTask.subtasks.map((subtask) => (
                   <TableRow key={subtask.subtask_id}>
                     <TableCell>{subtask.title}</TableCell>
                     <TableCell>
@@ -218,13 +227,16 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                       />
                     </TableCell>
                   </TableRow>
-                ))} */}
+                ))}
               </TableBody>
-            </Table>
+            </Table> */}
           </DialogDescription>
           <DialogFooter>
             <Button onClick={handleOk} className="bg-blue-500 text-white">
               OK
+            </Button>
+            <Button onClick={handleDelete} className="bg-gray-500 text-white">
+              Delete
             </Button>
             <Button onClick={handleCancel} className="bg-gray-500 text-white">
               Cancel

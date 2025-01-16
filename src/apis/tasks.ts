@@ -176,6 +176,24 @@ export const useUpdateTask = () => {
   });
 };
 
+export const useDeleteTask = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (taskId: number) => {
+      const res = await fetch(`${backendUrl}/tasks/${taskId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["tasks"],
+      });
+    },
+  });
+};
+
 // export const useGetUserIdByEmail = (email: string) => {
 //   return useQuery<number>({
 //     queryKey: ["users", "email", email],

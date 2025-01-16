@@ -41,9 +41,9 @@ export function AppSidebar() {
               Dashboard
             </a>
           </SidebarGroupLabel>
-          <SidebarGroupLabel>
+          {/* <SidebarGroupLabel>
             <p className="text-lg">Create Task</p>
-          </SidebarGroupLabel>
+          </SidebarGroupLabel> */}
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />

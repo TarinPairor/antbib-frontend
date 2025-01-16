@@ -23,10 +23,10 @@ export const fakeTasks = [
     priority: "high",
     created_by: 1,
     assigned_to: 1,
-    subtasks: [
-      { subtask_id: 1, title: "Subtask 1", is_completed: false },
-      { subtask_id: 2, title: "Subtask 2", is_completed: true },
-    ],
+    // subtasks: [
+    //   { subtask_id: 1, title: "Subtask 1", is_completed: false },
+    //   { subtask_id: 2, title: "Subtask 2", is_completed: true },
+    // ],
   },
   {
     task_id: 2,
@@ -39,10 +39,10 @@ export const fakeTasks = [
     priority: "medium",
     created_by: 1,
     assigned_to: 2,
-    subtasks: [
-      { subtask_id: 3, title: "Subtask 3", is_completed: false },
-      { subtask_id: 4, title: "Subtask 4", is_completed: true },
-    ],
+    // subtasks: [
+    //   { subtask_id: 3, title: "Subtask 3", is_completed: false },
+    //   { subtask_id: 4, title: "Subtask 4", is_completed: true },
+    // ],
   },
   {
     task_id: 3,
@@ -55,10 +55,10 @@ export const fakeTasks = [
     priority: "low",
     created_by: 1,
     assigned_to: 2,
-    subtasks: [
-      { subtask_id: 5, title: "Subtask 5", is_completed: false },
-      { subtask_id: 6, title: "Subtask 6", is_completed: true },
-    ],
+    // subtasks: [
+    //   { subtask_id: 5, title: "Subtask 5", is_completed: false },
+    //   { subtask_id: 6, title: "Subtask 6", is_completed: true },
+    // ],
   },
   {
     task_id: 4,
@@ -71,10 +71,10 @@ export const fakeTasks = [
     priority: "high",
     created_by: 1,
     assigned_to: 1,
-    subtasks: [
-      { subtask_id: 7, title: "Subtask 7", is_completed: false },
-      { subtask_id: 8, title: "Subtask 8", is_completed: true },
-    ],
+    // subtasks: [
+    //   { subtask_id: 7, title: "Subtask 7", is_completed: false },
+    //   { subtask_id: 8, title: "Subtask 8", is_completed: true },
+    // ],
   },
   {
     task_id: 5,
@@ -87,10 +87,10 @@ export const fakeTasks = [
     priority: "high",
     created_by: 1,
     assigned_to: 2,
-    subtasks: [
-      { subtask_id: 9, title: "Subtask 9", is_completed: false },
-      { subtask_id: 10, title: "Subtask 10", is_completed: true },
-    ],
+    // subtasks: [
+    //   { subtask_id: 9, title: "Subtask 9", is_completed: false },
+    //   { subtask_id: 10, title: "Subtask 10", is_completed: true },
+    // ],
   },
 ];
 

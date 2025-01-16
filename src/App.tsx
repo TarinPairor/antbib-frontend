@@ -13,14 +13,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function App() {
   const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
-        retry: 3,
-        refetchOnWindowFocus: true,
-        refetchOnReconnect: true,
-      },
-    },
+    // defaultOptions: {
+    //   queries: {
+    //     staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+    //     retry: 3,
+    //     refetchOnWindowFocus: true,
+    //     refetchOnReconnect: true,
+    //   },
+    // },
   });
 
   return (

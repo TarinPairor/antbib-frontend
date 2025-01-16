@@ -23,19 +23,18 @@ import {
   // BreadcrumbSeparator,
   // BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
-import { useEffect } from "react";
 
 export default function Home() {
   const { isLoaded: isClerkLoaded, user: clerkUser } = useUser(); // Ensure Clerk is fully loaded
   console.log("clerkUser", clerkUser);
-  const userEmail = clerkUser?.primaryEmailAddress?.emailAddress || "";
+  const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
   console.log("userEmail in home.tsx", userEmail);
 
-  useEffect(() => {
-    setTimeout(() => {
-      console.log("clerkUser in home.tsx", clerkUser);
-    }, 1000);
-  }, [clerkUser]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log("clerkUser in home.tsx", clerkUser);
+  //   }, 1000);
+  // }, [clerkUser]);
 
   // Fetch user by email
   const { data: user, isLoading: isUserLoading } = useGetUserByEmail(userEmail);
