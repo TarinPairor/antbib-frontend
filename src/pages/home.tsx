@@ -31,14 +31,14 @@ export default function Home() {
   // Fetch user by email
   const { data: user, isLoading: isUserLoading } = useGetUserByEmail(userEmail);
 
-  // Extract userId, default to 0 if user is not yet available
-  const userId = user?.user_id || 0;
+  // Extract userId, wait for user to load
+  const userId = user?.user_id;
 
   console.log("userId in home.tsx", userId);
 
   // Fetch tasks based on userId
   const { data: userTasks = [], isPending: isTasksPending } =
-    useGetTasksByUserId(userId);
+    useGetTasksByUserId(userId || 0);
 
   const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
 
