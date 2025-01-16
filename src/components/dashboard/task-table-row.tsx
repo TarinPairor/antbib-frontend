@@ -36,7 +36,7 @@ interface TaskTableRowProps {
 }
 
 export default function TaskTableRow({ task }: TaskTableRowProps) {
-  console.log(task);
+  // console.log(task);
   const { data: allUsers } = useGetAllUsers();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editedTask, setEditedTask] = useState<Task>(task);

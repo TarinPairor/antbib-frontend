@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-export const useGetTagsByUserId = (userId: number) => {
+export const useGetTagsByUserId = (userId: number | undefined) => {
   console.log("userId", userId);
   return useQuery<string[]>({
     queryKey: ["tags", userId],

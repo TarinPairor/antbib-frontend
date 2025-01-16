@@ -35,7 +35,7 @@ export default function Home() {
   const upcomingTasks = userTasks.filter(
     (task) => new Date(task.end_date) > new Date()
   );
-  const { data: tags } = useGetTagsByUserId(user?.user_id || 0);
+  const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
 
   if (isPending) {
     return <div>Loading...</div>;
@@ -165,23 +165,25 @@ export default function Home() {
       <h2 className="text-xl font-bold mb-4">My Work</h2>
       <Tabs>
         <TabsList>
-          {tags?.map((tag, index) => (
-            <TabsTrigger key={index} value={tag}>
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>{tag}</BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </TabsTrigger>
-          ))}
+          {Array.isArray(tags) &&
+            tags.map((tag, index) => (
+              <TabsTrigger key={index} value={tag}>
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>{tag}</BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </TabsTrigger>
+            ))}
         </TabsList>
-        {tags?.map((tag, index) => (
-          <TabsContent key={index} value={tag}>
-            <TaskTable
-              tasks={userTasks.filter((task) => task?.tags?.includes(tag))}
-            />
-          </TabsContent>
-        ))}
+        {Array.isArray(tags) &&
+          tags.map((tag, index) => (
+            <TabsContent key={index} value={tag}>
+              <TaskTable
+                tasks={userTasks.filter((task) => task?.tags?.includes(tag))}
+              />
+            </TabsContent>
+          ))}
       </Tabs>
     </div>
   );
