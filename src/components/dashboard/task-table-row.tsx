@@ -157,26 +157,28 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                 <SelectItem value="done">Done</SelectItem>
               </SelectContent>
             </Select>
-            {task.start_date && (
-              <>
-                <p>Start Date</p>
-                <DatePicker
-                  placeholder="Start Date"
-                  defaultValue={editedTask.start_date}
-                  className="w-full mb-2"
-                />
-              </>
-            )}
-            {task.end_date && (
-              <>
-                <p>End Date</p>
-                <DatePicker
-                  placeholder="End Date"
-                  defaultValue={editedTask.end_date}
-                  className="w-full mb-2"
-                />
-              </>
-            )}
+            <>
+              <p>Start Date</p>
+              <DatePicker
+                placeholder="Start Date"
+                defaultValue={editedTask.start_date}
+                className="w-full mb-2"
+                onValueChange={(date: string) =>
+                  setEditedTask({ ...editedTask, start_date: date })
+                }
+              />
+            </>
+            <>
+              <p>End Date</p>
+              <DatePicker
+                placeholder="End Date"
+                defaultValue={editedTask.end_date}
+                className="w-full mb-2"
+                onValueChange={(date: string) =>
+                  setEditedTask({ ...editedTask, end_date: date })
+                }
+              />
+            </>
             <Input
               name="tags"
               placeholder="Tags"

@@ -22,13 +22,14 @@ export const useGetTasksByUserId = (userId: number) => {
   return useQuery<Task[]>({
     queryKey: ["tasks", userId],
     queryFn: async () => {
+      console.log("useGetTasksByUserId userId", userId);
+      console.log("userId", userId);
       const res = await fetch(`${backendUrl}/tasks/user/${userId}`);
       const data = await res.json();
       return data;
     },
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    refetchOnWindowFocus: false, // Prevent refetching on window focus
-    refetchOnMount: false, // Prevent refetching when component mounts
+    // refetchOnWindowFocus: false, // Prevent refetching on window focus
+    // refetchOnMount: false, // Prevent refetching when component mounts
   });
 };
 

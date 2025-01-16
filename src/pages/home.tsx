@@ -34,8 +34,10 @@ export default function Home() {
   // Extract userId, default to 0 if user is not yet available
   const userId = user?.user_id || 0;
 
+  console.log("userId in home.tsx", userId);
+
   // Fetch tasks based on userId
-  const { data: userTasks = [], isLoading: isTasksLoading } =
+  const { data: userTasks = [], isPending: isTasksPending } =
     useGetTasksByUserId(userId);
 
   const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
@@ -45,7 +47,7 @@ export default function Home() {
     return <div>Loading user information...</div>;
   }
 
-  if (isTasksLoading) {
+  if (isTasksPending) {
     return <div>Loading tasks...</div>;
   }
 
