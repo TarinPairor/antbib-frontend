@@ -29,13 +29,17 @@ export default function Home() {
   const { data: user } = useGetUserByEmail(
     clerkUser?.primaryEmailAddress?.emailAddress || ""
   );
-  const { data: userTasks = fakeTasks } = useGetTasksByUserId(
+  const { data: userTasks = fakeTasks, isPending } = useGetTasksByUserId(
     user?.user_id || 0
   );
   const upcomingTasks = userTasks.filter(
     (task) => new Date(task.end_date) > new Date()
   );
   const { data: tags } = useGetTagsByUserId(user?.user_id || 0);
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-4 w-full">
