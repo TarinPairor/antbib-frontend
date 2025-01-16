@@ -8,7 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -54,29 +55,29 @@ export default function EmailThreadSummarizer() {
   };
 
   return (
-    <Card className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Email Thread Summarizer</h1>
-      <div className="space-y-4">
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          rows={4}
-          placeholder="Paste your email thread here..."
-          className="w-full min-h-[100px] p-3 border rounded-md"
-        />
+    <div className="flex flex-col justify-center items-center h-full">
+      <div className="flex flex-col justify-between items-center mb-4  gap-3">
+        <h1 className="text-2xl font-bold mb-4 ">Email Thread Summarizer</h1>
+        <p>
+          Summarize an email thread into key points for each user involved. Just
+          copy and paste the email thread and click "Summarize".
+        </p>
+        <div className="w-full flex flex-col gap-2">
+          <Textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            rows={4}
+            placeholder="Paste your email thread here..."
+            className=" min-h-[100px] p-3 border rounded-md"
+          />
 
-        <button
-          onClick={handleSummarize}
-          disabled={isPending}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
-        >
-          {isPending ? "Summarizing..." : "Summarize"}
-        </button>
+          <Button onClick={handleSummarize} disabled={isPending}>
+            {isPending ? "Summarizing..." : "Summarize"}
+          </Button>
 
-        {data?.email_summary && (
-          <div className="mt-6">
-            <h2 className="text-xl font-bold mb-4">Summary</h2>
-            <Table>
+          <div className="mt-6 ">
+            <h2 className="text-xl font-bold mb-4 ">Summary</h2>
+            <Table className="">
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[200px]">User</TableHead>
@@ -84,24 +85,26 @@ export default function EmailThreadSummarizer() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.email_summary.map((item: EmailSummary, index: number) => (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium">{item.user}</TableCell>
-                    <TableCell>{item.summary}</TableCell>
-                  </TableRow>
-                ))}
+                {data?.email_summary.map(
+                  (item: EmailSummary, index: number) => (
+                    <TableRow key={index}>
+                      <TableCell className="font-medium">{item.user}</TableCell>
+                      <TableCell>{item.summary}</TableCell>
+                    </TableRow>
+                  )
+                )}
               </TableBody>
             </Table>
           </div>
-        )}
 
-        {error && (
-          <div className="p-4 text-red-500 bg-red-50 rounded-md">
-            Error:{" "}
-            {error instanceof Error ? error.message : "Failed to get summary"}
-          </div>
-        )}
+          {error && (
+            <div className="p-4 text-red-500 bg-red-50 rounded-md">
+              Error:{" "}
+              {error instanceof Error ? error.message : "Failed to get summary"}
+            </div>
+          )}
+        </div>
       </div>
-    </Card>
+    </div>
   );
 }
