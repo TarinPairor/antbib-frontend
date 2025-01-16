@@ -37,7 +37,8 @@ export default function Home() {
   // }, [clerkUser]);
 
   // Fetch user by email
-  const { data: user, isLoading: isUserLoading } = useGetUserByEmail(userEmail);
+  const { data: user, isLoading: isUserLoading } =
+    useGetUserByEmail("e1075551@u.nus.edu");
   console.log("user in home.tsx", user);
 
   // Extract userId, wait for user to load
