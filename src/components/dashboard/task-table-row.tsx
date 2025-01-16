@@ -58,34 +58,30 @@ export default function TaskTableRow({ task, onUpdate }: TaskTableRowProps) {
   };
 
   const handleStatusChange = (value: string) => {
-    setEditedTask({ ...editedTask, Status: value });
+    setEditedTask({ ...editedTask, status: value });
   };
-
-  //   const handleTagsChange = (value: string[]) => {
-  //     setEditedTask({ ...editedTask, Tags: value.join(",") });
-  //   };
 
   return (
     <>
-      <TableRow key={task.TaskID}>
-        <TableCell>{task.Title}</TableCell>
-        <TableCell>{task.Description}</TableCell>
+      <TableRow key={task.task_id}>
+        <TableCell>{task.title}</TableCell>
+        <TableCell>{task.description}</TableCell>
         <TableCell>
           <Badge
             variant={`${
-              task.Status === "todo"
+              task.status === "todo"
                 ? "red"
-                : task.Status === "developing"
+                : task.status === "developing"
                 ? "yellow"
                 : "green"
             }`}
           >
-            {task.Status}
+            {task.status}
           </Badge>
         </TableCell>
-        <TableCell>{task.Priority}</TableCell>
+        <TableCell>{task.priority}</TableCell>
         <TableCell>
-          {task.Tags.split(",").map((tag) => (
+          {task.tags.split(",").map((tag) => (
             <Badge key={tag} className="bg-gray-200 text-gray-800 p-1 m-1">
               {tag}
             </Badge>
@@ -106,62 +102,61 @@ export default function TaskTableRow({ task, onUpdate }: TaskTableRowProps) {
           <DialogTitle>Task Details</DialogTitle>
           <DialogDescription className="flex flex-col gap-2">
             <Input
-              name="Title"
+              name="title"
               placeholder="Title"
-              value={editedTask.Title}
+              value={editedTask.title}
               onChange={handleChange}
               className="mb-2"
             />
             <Textarea
-              name="Description"
+              name="description"
               rows={4}
               placeholder="Description"
-              value={editedTask.Description}
+              value={editedTask.description}
               onChange={handleChange}
               className="mb-2"
             />
             <Select
-              defaultValue={editedTask.Assignee}
+              defaultValue={editedTask.assigned_to.toString()}
               onValueChange={(value) =>
-                setEditedTask({ ...editedTask, Assignee: value })
+                setEditedTask({ ...editedTask, assigned_to: parseInt(value) })
               }
             >
-              <SelectTrigger>{editedTask.Assignee}</SelectTrigger>
+              <SelectTrigger>{editedTask.assigned_to}</SelectTrigger>
               <SelectContent>
-                <SelectItem value="John Doe">Tarin</SelectItem>
-                <SelectItem value="Jane Doe">Jane Doe</SelectItem>
-                <SelectItem value="John Smith">John Smith</SelectItem>
+                <SelectItem value="1">Admin</SelectItem>
+                <SelectItem value="2">John Doe</SelectItem>
               </SelectContent>
             </Select>
 
             <Select
-              defaultValue={editedTask.Status}
+              defaultValue={editedTask.status}
               onValueChange={handleStatusChange}
             >
-              <SelectTrigger>{editedTask.Status}</SelectTrigger>
+              <SelectTrigger>{editedTask.status}</SelectTrigger>
               <SelectContent>
                 <SelectItem value="todo">To Do</SelectItem>
-                <SelectItem value="developing">Developing</SelectItem>
+                <SelectItem value="developing">In Progress</SelectItem>
                 <SelectItem value="done">Done</SelectItem>
               </SelectContent>
             </Select>
             <DatePicker
-            //   placeholder="Start Date"
-            //   defaultValue={editedTask.StartDate}
-            //   className="w-full mb-2"
+              placeholder="Start Date"
+              defaultValue={editedTask.start_date}
+              className="w-full mb-2"
             />
             <DatePicker
-            //   placeholder="End Date"
-            //   defaultValue={editedTask.EndDate}
-            //   className="w-full mb-2"
+              placeholder="End Date"
+              defaultValue={editedTask.end_date}
+              className="w-full mb-2"
             />
-            <Select
-            //   mode="tags"
-            //   className="w-full mb-2"
-            //   placeholder="Tags"
-            //   defaultValue={editedTask.Tags.split(",")}
-            //   onValueChange={handleTagsChange}
-            ></Select>
+            <Input
+              name="tags"
+              placeholder="Tags"
+              value={editedTask.tags}
+              onChange={handleChange}
+              className="mb-2"
+            />
             <h3 className="font-bold mb-2">Subtasks</h3>
             <Table>
               <TableHeader>
@@ -171,24 +166,24 @@ export default function TaskTableRow({ task, onUpdate }: TaskTableRowProps) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {editedTask.Subtasks.map((subtask) => (
-                  <TableRow key={subtask.SubtaskID}>
-                    <TableCell>{subtask.Title}</TableCell>
+                {editedTask.subtasks.map((subtask) => (
+                  <TableRow key={subtask.subtask_id}>
+                    <TableCell>{subtask.title}</TableCell>
                     <TableCell>
                       <input
                         type="checkbox"
-                        checked={subtask.IsCompleted}
+                        checked={subtask.is_completed}
                         className="mb-1"
                         onChange={(e) => {
-                          const updatedSubtasks = editedTask.Subtasks.map(
+                          const updatedSubtasks = editedTask.subtasks.map(
                             (st) =>
-                              st.SubtaskID === subtask.SubtaskID
-                                ? { ...st, IsCompleted: e.target.checked }
+                              st.subtask_id === subtask.subtask_id
+                                ? { ...st, is_completed: e.target.checked }
                                 : st
                           );
                           setEditedTask({
                             ...editedTask,
-                            Subtasks: updatedSubtasks,
+                            subtasks: updatedSubtasks,
                           });
                         }}
                       />

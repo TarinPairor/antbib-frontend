@@ -55,7 +55,7 @@ export default function Home() {
                 <TableCell
                   className={cn(
                     task.status === "todo" ? "text-red-500" : "",
-                    task.status === "in_progress" ? "text-yellow-500" : "",
+                    task.status === "developing" ? "text-yellow-500" : "",
                     task.status === "done" ? "text-green-500" : ""
                   )}
                 >
@@ -102,7 +102,7 @@ export default function Home() {
                 <TableCell
                   className={cn(
                     task.status === "todo" ? "text-red-500" : "",
-                    task.status === "in_progress" ? "text-yellow-500" : "",
+                    task.status === "developing" ? "text-yellow-500" : "",
                     task.status === "done" ? "text-green-500" : ""
                   )}
                 >
@@ -149,7 +149,7 @@ export default function Home() {
       <Tabs>
         <TabsList>
           <TabsTrigger value="todo">Todo</TabsTrigger>
-          <TabsTrigger value="in_progress">In Progress</TabsTrigger>
+          <TabsTrigger value="developing">In Progress</TabsTrigger>
           <TabsTrigger value="done">Done</TabsTrigger>
         </TabsList>
         <TabsContent value="todo">
@@ -157,9 +157,9 @@ export default function Home() {
             tasks={userTasks.filter((task) => task.status === "todo")}
           />
         </TabsContent>
-        <TabsContent value="in_progress">
+        <TabsContent value="developing">
           <TaskTable
-            tasks={userTasks.filter((task) => task.status === "in_progress")}
+            tasks={userTasks.filter((task) => task.status === "developing")}
           />
         </TabsContent>
         <TabsContent value="done">
@@ -195,7 +195,7 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
               <TableCell
                 className={cn(
                   task.status === "todo" ? "text-red-500" : "",
-                  task.status === "in_progress" ? "text-yellow-500" : "",
+                  task.status === "developing" ? "text-yellow-500" : "",
                   task.status === "done" ? "text-green-500" : ""
                 )}
               >
