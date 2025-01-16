@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fakeTasks } from "@/constants/constants";
+// import { fakeTasks } from "@/constants/constants";
 import { cn, formatDateTime } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -25,23 +25,38 @@ import {
 } from "@/components/ui/breadcrumb";
 
 export default function Home() {
-  const clerkUser = useUser().user;
-  const { data: user } = useGetUserByEmail(
-    clerkUser?.primaryEmailAddress?.emailAddress || ""
-  );
+  const { isLoaded: isClerkLoaded, user: clerkUser } = useUser(); // Ensure Clerk is fully loaded
+  const userEmail = clerkUser?.primaryEmailAddress?.emailAddress || "";
+
+  // Fetch user by email
+  const { data: user, isLoading: isUserLoading } = useGetUserByEmail(userEmail);
+
+  // Extract userId, default to 0 if user is not yet available
+  const userId = user?.user_id || 0;
+
+  // Fetch tasks based on userId
+  const { data: userTasks = [], isLoading: isTasksLoading } =
+    useGetTasksByUserId(userId);
+
+  const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
+
+  // Handle loading states
+  if (!isClerkLoaded || isUserLoading) {
+    return <div>Loading user information...</div>;
+  }
+
+  if (isTasksLoading) {
+    return <div>Loading tasks...</div>;
+  }
+
+  // Debugging logs for hosted environment
   console.log("clerkUser", clerkUser);
   console.log("user", user);
-  const { data: userTasks = fakeTasks, isPending } = useGetTasksByUserId(
-    user?.user_id || 0
-  );
+  console.log("userTasks", userTasks);
+
   const upcomingTasks = userTasks.filter(
     (task) => new Date(task.end_date) > new Date()
   );
-  const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
-
-  if (isPending) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="p-4 w-full">
