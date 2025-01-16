@@ -1,5 +1,9 @@
 # Task Management System (AntBib)
 
+## Overview
+
+"AntBib" symbolizes 2 things: Ants, which are known for their teamwork and efficiency, and Bibliography, which represents the academic and literary focus of the project.
+These two concepts are combined to create a task management system that is efficient, collaborative, and tailored for single academic organizations.
 This project is a comprehensive task and meeting management system designed for enhanced productivity and streamlined operations. It is tailored to meet the needs of organizations, including support for multilingual tasks and grant management integration.
 
 ## Features
