@@ -120,7 +120,9 @@ export default function Home() {
                 >
                   {task.status}
                 </TableCell>
-                <TableCell>{formatDateTime(task.start_date)}</TableCell>
+                <TableCell>
+                  {task.start_date ? formatDateTime(task.start_date) : ""}
+                </TableCell>
                 <TableCell>{formatDateTime(task.end_date) || "N/A"}</TableCell>
                 <TableCell>{task.priority}</TableCell>
                 <TableCell>
