@@ -30,6 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useDeleteTask, useUpdateTask } from "@/apis/tasks";
 import { useGetAllUsers, useGetUserById } from "@/apis/users";
 import { textWithEllipsis } from "@/lib/utils";
+import { useCreateNotification } from "@/apis/notifications";
 
 interface TaskTableRowProps {
   task: Task;
@@ -89,8 +90,22 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
     setIsModalVisible(true);
   };
 
+  const createNotification = useCreateNotification();
+
   const handleOk = () => {
     updateTask(editedTask);
+
+    // if assignee_to is not the same as the original user, send a notification
+    console.log(editedTask.assigned_to);
+    console.log(user?.user_id);
+    if (editedTask.assigned_to !== user?.user_id) {
+      console.log("sending notification");
+      createNotification.mutate({
+        user_id: editedTask.assigned_to,
+        message: `You have been assigned a new task: ${editedTask.title}`,
+      });
+    }
+
     setIsModalVisible(false);
   };
 

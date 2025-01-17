@@ -1,3 +1,4 @@
+import { useGetNotificationsByUserEmail } from "@/apis/notifications";
 import {
   Table,
   TableBody,
@@ -6,11 +7,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fakeNotifications } from "@/constants/constants";
+import { UserContext } from "@/contexts/user-context";
+import { Notification } from "@/interfaces/types";
+import { useContext } from "react";
 
 export default function Inbox() {
-  const userNotifications = fakeNotifications.filter(
-    (notification) => notification.user_id === 4
+  // const userNotifications = fakeNotifications.filter(
+  //   (notification) => notification.user_id === 4
+  // );
+  const { user } = useContext(UserContext);
+  console.log(user);
+
+  const { data: userNotifications = [] } = useGetNotificationsByUserEmail(
+    user?.user_email || ""
   );
 
   return (
@@ -30,7 +39,7 @@ export default function Inbox() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {userNotifications.map((notification) => (
+            {userNotifications.map((notification: Notification) => (
               <TableRow key={notification.notification_id}>
                 <TableCell className="py-2 px-4 border-b">
                   {notification.message}
@@ -39,9 +48,10 @@ export default function Inbox() {
                   {new Date(notification.created_at).toLocaleString()}
                 </TableCell>
                 <TableCell className="py-2 px-4 border-b">
-                  {notification.is_read && (
+                  {/* {notification.is_read && (
                     <img src="/check.svg" width={30} height={30} />
-                  )}
+                  )} */}
+                  <img src="/check.svg" width={30} height={30} />
                 </TableCell>
               </TableRow>
             ))}

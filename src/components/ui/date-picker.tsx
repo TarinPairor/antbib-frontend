@@ -24,7 +24,7 @@ export function DatePicker({
   className,
   onValueChange,
 }: DatePickerProps) {
-  console.log(defaultValue);
+  // console.log(defaultValue);
   const [date, setDate] = React.useState<string>(defaultValue);
 
   return (
