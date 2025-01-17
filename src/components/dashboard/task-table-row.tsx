@@ -36,8 +36,8 @@ interface TaskTableRowProps {
 }
 
 const tagColors = [
-  "bg-red-500",
-  "bg-yellow-500",
+  // "bg-red-500",
+  // "bg-yellow-500",
   "bg-green-500",
   "bg-blue-500",
   "bg-purple-500",
@@ -46,6 +46,30 @@ const tagColors = [
   "bg-teal-500",
   "bg-cyan-500",
   "bg-orange-500",
+  "bg-amber-500",
+  "bg-lime-500",
+  "bg-emerald-500",
+  "bg-violet-500",
+  "bg-rose-500",
+  "bg-cyan-500",
+  "bg-green-400",
+  "bg-blue-400",
+  "bg-purple-400",
+  "bg-pink-400",
+  "bg-indigo-400",
+  "bg-teal-400",
+  "bg-cyan-400",
+  "bg-orange-400",
+  "bg-amber-400",
+  "bg-lime-400",
+  "bg-emerald-400",
+  "bg-violet-400",
+  "bg-rose-400",
+  "bg-cyan-400",
+  "bg-green-300",
+  "bg-blue-300",
+  "bg-purple-300",
+  "bg-pink-300",
 ];
 
 const getRandomColorClass = () => {

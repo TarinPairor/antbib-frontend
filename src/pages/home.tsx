@@ -16,6 +16,10 @@ import { useGetTagsByUserEmail } from "@/apis/tags";
 import { useContext } from "react";
 import { UserContext } from "@/contexts/user-context";
 import LandingPage from "@/components/home/landing-page";
+import Centralizer from "@/components/centralizer";
+import LoadingSpinner from "@/components/loading-spinner";
+import Typewriter, { TypewriterClass } from "typewriter-effect";
+import { SeparatorHorizontalIcon } from "lucide-react";
 
 export default function Home() {
   const { user: user } = useContext(UserContext);
@@ -32,12 +36,20 @@ export default function Home() {
   console.log("tags in home.tsx", tags);
 
   // Handle loading states
-  if (!isClerkLoaded) {
-    return <div>Loading user information...</div>;
+  if (!isClerkLoaded || isTasksPending) {
+    return (
+      <Centralizer className="top-1/2">
+        <LoadingSpinner className="fill-purple-500" />
+      </Centralizer>
+    );
   }
 
   if (isTasksPending) {
-    return <div>Loading tasks...</div>;
+    return (
+      <Centralizer className="top-1/2">
+        <LoadingSpinner className="fill-blue-500" />
+      </Centralizer>
+    );
   }
 
   const upcomingTasks = Array.isArray(userTasks)
@@ -237,11 +249,27 @@ export default function Home() {
   return (
     <div className="p-4 w-full">
       <h1 className="text-2xl font-bold mb-4">Your Tasks</h1>
+      <p className="mb-2">
+        <Typewriter
+          options={{ loop: true }}
+          onInit={(typewriter: TypewriterClass) => {
+            typewriter
+              .typeString("All your todos.")
+              .pauseFor(1000)
+              .deleteAll()
+              .typeString("Toggle to see the tasks in progress.")
+              .start();
+          }}
+        />
+      </p>
       <YourTasks />
+      <SeparatorHorizontalIcon />
       <h1 className="text-2xl font-bold mb-4">All Tasks</h1>
       <AllTasks />
+      <SeparatorHorizontalIcon />
       <h2 className="text-xl font-bold mb-4">Upcoming Tasks</h2>
       <UpcomingTasks />
+      <SeparatorHorizontalIcon />
       <h2 className="text-xl font-bold mb-4">My Work</h2>
       <MyWork />
     </div>

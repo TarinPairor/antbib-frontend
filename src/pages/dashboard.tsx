@@ -39,6 +39,8 @@ import {
 import { DatePicker } from "@/components/ui/date-picker";
 import { useUser } from "@clerk/clerk-react";
 import Typewriter, { TypewriterClass } from "typewriter-effect";
+import Centralizer from "@/components/centralizer";
+import LoadingSpinner from "@/components/loading-spinner";
 
 export default function Dashboard() {
   const clerkUser = useUser().user;
@@ -46,8 +48,8 @@ export default function Dashboard() {
   const { data: user = fakeUsers[0] } = useGetUserByEmail(
     userEmail || "e1075551@u.nus.edu"
   );
-  const { data: tasks } = useGetAllTasks();
-  const { data: allUsers } = useGetAllUsers();
+  const { data: tasks, isPending: isTasksPending } = useGetAllTasks();
+  const { data: allUsers, isPending: isUsersPending } = useGetAllUsers();
   const [newTask, setNewTask] = useState<Omit<Task, "task_id">>({
     title: "",
     description: "",
@@ -91,6 +93,14 @@ export default function Dashboard() {
     developing: tasks?.filter((task) => task.status === "developing"),
     done: tasks?.filter((task) => task.status === "done"),
   };
+
+  if (isTasksPending || isUsersPending) {
+    return (
+      <Centralizer className="top-1/2">
+        <LoadingSpinner className="fill-green-500" />
+      </Centralizer>
+    );
+  }
 
   return (
     <div className="w-full">
