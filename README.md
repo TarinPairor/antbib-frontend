@@ -12,7 +12,7 @@ This project is a comprehensive task and meeting management system designed for 
 
 1. **Task Scheduling**: Arrange tasks or meetings with authors, publishers, and event partners.
 2. **Send Follow-Ups**: Send follow-up tasks to collaborators or team members post-meetings.
-3. **Reminders and Notifications**: Automate reminders for key events like book launches, workshops, and committee meetings.
+3. **Reminders and Notifications**: Automate reminders when you are assigned a task or when a deadline is approaching.
 4. **Email Thread Summaries**: Generate concise summaries of email discussions for efficient decision-making.
 
 ---
@@ -37,6 +37,22 @@ This project is a comprehensive task and meeting management system designed for 
    - I can opy and paste email threads for AI-generated summaries.
 
 ---
+
+### Pages
+
+1. `/` - Home Page:
+   - Displays your todo, in-progress, and completed tasks.
+   - Allows you to view all tasks.
+   - Allows you to view upcoming tasks.
+   - Allows you to view tasks filtered by tags.
+2. `/inbox` - Notifications Page:
+   - Displays notifications for newly assigned tasks.
+3. `/calendar` - Calendar Page:
+   - Displays all tasks in a calendar format.
+4. `/dashboard` - Dashboard Page:
+   - Displays all tasks in a categorized list.
+5. `/email-thread-summarizer` - Email Summary Page:
+   - Allows you to paste email threads for AI-generated summaries.
 
 ## Database Schema
 
