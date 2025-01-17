@@ -60,7 +60,7 @@ export default function Calendar() {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Calendar</h1>
+      <h1 className="font-bold mb-4">Calendar</h1>
       {/* Month Navigation */}
       <div className="flex justify-between items-center mb-4">
         <button

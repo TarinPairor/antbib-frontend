@@ -94,7 +94,7 @@ export const useGetTasksByUserEmail = (email: string) => {
 // };
 
 // ================== SUBTASKS ==================
-export const useGetSubtasksByTaskId = (taskId: string) => {
+export const useGetSubtasksByTaskId = (taskId: number) => {
   return useQuery<Subtask[]>({
     queryKey: ["tasks", taskId, "subtasks"],
     queryFn: async () => {
@@ -194,6 +194,28 @@ export const useDeleteTask = () => {
     mutationFn: async (taskId: number) => {
       const res = await fetch(`${backendUrl}/tasks/${taskId}`, {
         method: "DELETE",
+      });
+      const data = await res.json();
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["tasks"],
+      });
+    },
+  });
+};
+
+export const useCreateSubtask = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (newSubtask: Omit<Subtask, "subtask_id">) => {
+      const res = await fetch(`${backendUrl}/task/subtasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newSubtask),
       });
       const data = await res.json();
       return data;

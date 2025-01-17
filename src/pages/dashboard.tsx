@@ -1,4 +1,4 @@
-import { Task } from "@/interfaces/types";
+import { Subtask, Task } from "@/interfaces/types";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useCreateTask } from "@/apis/tasks";
@@ -8,6 +8,7 @@ import {
   TableBody,
   TableRow,
   TableHead,
+  TableCell,
 } from "@/components/ui/table";
 import {
   Accordion,
@@ -61,6 +62,11 @@ export default function Dashboard() {
     priority: "low",
     created_by: user?.user_id,
   });
+  // const { mutate: createSubtask } = useCreateSubtask();
+  const [newSubTasks, setNewSubTasks] = useState<Omit<Subtask, "subtask_id">[]>(
+    []
+  );
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleStatusChange = (
@@ -75,6 +81,7 @@ export default function Dashboard() {
 
   const handleOk = () => {
     createTaskMutation.mutate(newTask);
+    // createSubtask(newSubTasks);
     setIsModalVisible(false);
   };
 
@@ -257,7 +264,7 @@ export default function Dashboard() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* {newTask.subtasks.map((subtask, index) => (
+                {newSubTasks.map((subtask, index) => (
                   <TableRow key={index}>
                     <TableCell>{subtask.title}</TableCell>
                     <TableCell>
@@ -266,21 +273,17 @@ export default function Dashboard() {
                         checked={subtask.is_completed}
                         className="mb-1"
                         onChange={(e) => {
-                          const updatedSubtasks = newTask.subtasks.map(
-                            (st, i) =>
-                              i === index
-                                ? { ...st, is_completed: e.target.checked }
-                                : st
+                          const updatedSubtasks = newSubTasks.map((st, i) =>
+                            i === index
+                              ? { ...st, is_completed: e.target.checked }
+                              : st
                           );
-                          setNewTask({
-                            ...newTask,
-                            subtasks: updatedSubtasks,
-                          });
+                          setNewSubTasks(updatedSubtasks);
                         }}
                       />
                     </TableCell>
                   </TableRow>
-                ))} */}
+                ))}
               </TableBody>
             </Table>
           </DialogDescription>

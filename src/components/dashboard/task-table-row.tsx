@@ -2,6 +2,10 @@ import { useState } from "react";
 import {
   TableRow,
   TableCell,
+  Table,
+  TableHeader,
+  TableHead,
+  TableBody,
   // Table,
   // TableHeader,
   // TableBody,
@@ -9,7 +13,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Task } from "@/interfaces/types";
+import { Subtask, Task } from "@/interfaces/types";
 import {
   Dialog,
   DialogTrigger,
@@ -27,7 +31,11 @@ import {
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Textarea } from "@/components/ui/textarea";
-import { useDeleteTask, useUpdateTask } from "@/apis/tasks";
+import {
+  useDeleteTask,
+  useGetSubtasksByTaskId,
+  useUpdateTask,
+} from "@/apis/tasks";
 import { useGetAllUsers, useGetUserById } from "@/apis/users";
 import { textWithEllipsis } from "@/lib/utils";
 
@@ -84,6 +92,10 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
   const [editedTask, setEditedTask] = useState<Task>(task);
   const { mutate: updateTask } = useUpdateTask();
   const { mutate: deleteTask } = useDeleteTask();
+  const { data: subtasks } = useGetSubtasksByTaskId(task.task_id || 0);
+  const [editedSubtasks, setEditedSubtasks] = useState<Subtask[]>(
+    subtasks || []
+  );
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -236,7 +248,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
               onChange={handleChange}
               className="mb-2"
             />
-            {/* <h3 className="font-bold mb-2">Subtasks</h3>
+            <h3 className="font-bold mb-2">Subtasks</h3>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -245,7 +257,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {editedTask.subtasks.map((subtask) => (
+                {editedSubtasks?.map((subtask) => (
                   <TableRow key={subtask.subtask_id}>
                     <TableCell>{subtask.title}</TableCell>
                     <TableCell>
@@ -254,23 +266,19 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                         checked={subtask.is_completed}
                         className="mb-1"
                         onChange={(e) => {
-                          const updatedSubtasks = editedTask.subtasks.map(
-                            (st) =>
-                              st.subtask_id === subtask.subtask_id
-                                ? { ...st, is_completed: e.target.checked }
-                                : st
+                          const updatedSubtasks = editedSubtasks?.map((st) =>
+                            st.subtask_id === subtask.subtask_id
+                              ? { ...st, is_completed: e.target.checked }
+                              : st
                           );
-                          setEditedTask({
-                            ...editedTask,
-                            subtasks: updatedSubtasks,
-                          });
+                          setEditedSubtasks(updatedSubtasks);
                         }}
                       />
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
-            </Table> */}
+            </Table>
           </DialogDescription>
           <DialogFooter>
             <Button onClick={handleOk} className="bg-blue-500 text-white">

@@ -219,7 +219,7 @@ export default function Home() {
   const MyWork = () => {
     return (
       <Tabs>
-        <TabsList>
+        <TabsList className="flex gap-1">
           {Array.isArray(tags) &&
             tags
               ?.filter((tag) => tag !== "")
