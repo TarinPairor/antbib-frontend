@@ -102,7 +102,7 @@ CREATE TABLE subtasks (
 - **User Login/Signup**:
   - Users log in or sign up with their email and password.
 - **Dashboard**:
-  - Displays categorized tasks and meetings (e.g., `todo`, `in_progress`, `done`).
+  - Displays categorized tasks and meetings (e.g., `todo`, `developing`, `done`).
 - **Home**:
   - Allows users to view their own tasks, including assignees, and tags.
 - **Notifications**:
