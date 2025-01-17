@@ -246,6 +246,14 @@ export default function Home() {
       </Tabs>
     );
   };
+
+  if (!userTasks) {
+    return (
+      <Centralizer className="top-1/2">
+        <p className="text-gray-800 dark:text-white">No tasks yet!</p>
+      </Centralizer>
+    );
+  }
   return (
     <div className="p-4 w-full">
       <h1 className="text-2xl font-bold mb-4">Your Tasks</h1>
