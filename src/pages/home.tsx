@@ -65,6 +65,16 @@ export default function Home() {
     (task) => new Date(task.end_date) > new Date()
   );
 
+  if (!clerkUser) {
+    return (
+      <div className="p-4 flex flex-col items-center">
+        <img src="/ant.svg" alt="AntBib Logo" className="w-24 h-24" />
+        <h1 className="text-2xl font-bold mb-4">Welcome to AntBib</h1>
+        <p>Please sign in to view your tasks.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="p-4 w-full">
       <h1 className="text-2xl font-bold mb-4">Your Tasks</h1>

@@ -160,16 +160,52 @@ export const fakeSubtasks = [
 export const fakeNotifications = [
   {
     notification_id: 1,
-    user_id: 1,
-    message: "Notification 1 for user 1",
+    user_id: 4,
+    message: 'Tarin assigned you a task: "Meet and Greet"',
     created_at: "2023-10-01T10:00:00Z",
     is_read: false,
+    details:
+      "You have been assigned a new task by Tarin. Please check the details and complete it by the deadline.",
+    deadline: "2023-10-05T17:00:00Z",
   },
   {
     notification_id: 2,
-    user_id: 2,
-    message: "Notification 2 for user 2",
+    user_id: 4,
+    message: 'Deadline upcoming for task: "Project Presentation"',
     created_at: "2023-10-01T11:00:00Z",
     is_read: true,
+    details:
+      'The deadline for your task "Project Presentation" is approaching. Please ensure all preparations are complete.',
+    deadline: "2023-10-03T09:00:00Z",
+  },
+  {
+    notification_id: 3,
+    user_id: 4,
+    message: 'New comment on task: "Design Review"',
+    created_at: "2023-10-02T08:30:00Z",
+    is_read: false,
+    details:
+      'A new comment has been added to your task "Design Review". Please check the comments section for more details.',
+    deadline: "2023-10-04T12:00:00Z",
+  },
+  {
+    notification_id: 4,
+    user_id: 4,
+    message: 'Task "Code Refactoring" marked as completed',
+    created_at: "2023-10-02T14:45:00Z",
+    is_read: true,
+    details:
+      'The task "Code Refactoring" assigned to you has been marked as completed. Great job!',
+    deadline: null,
+  },
+  {
+    notification_id: 5,
+    user_id: 4,
+    message: 'Meeting scheduled: "Sprint Planning"',
+    created_at: "2023-10-03T09:15:00Z",
+    is_read: false,
+    details:
+      'A new meeting "Sprint Planning" has been scheduled. Please check your calendar for the meeting details.',
+    deadline: "2023-10-06T10:00:00Z",
   },
 ];

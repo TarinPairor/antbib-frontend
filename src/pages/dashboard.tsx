@@ -93,12 +93,16 @@ export default function Dashboard() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white">
+        skjdvfjkdhbodlhbivspk;ldjk;sdlvj;sdolv;lsdv
+        dlfkgjldfpjgpdflkjbghwdokjsbga;lkgvqpbdfk''aklvs
+      </h1>
+      <div className="flex flex-col justify-between items-center mb-4 w-full">
+        <h1 className="text-2xl font-bold mb-4 w-full">Dashboard</h1>
         <Button
           onClick={handleCreateTask}
           disabled={createTaskMutation.isPending}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-full"
         >
           <Plus className="h-4 w-4" />
           {createTaskMutation.isPending ? "Creating..." : "Create Task"}

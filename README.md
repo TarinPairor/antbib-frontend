@@ -10,8 +10,8 @@ This project is a comprehensive task and meeting management system designed for 
 
 ### Core Features
 
-1. **Meeting Scheduling**: Arrange meetings with authors, publishers, and event partners.
-2. **Automated Follow-Ups**: Send follow-up tasks to collaborators or team members post-meetings.
+1. **Task Scheduling**: Arrange tasks or meetings with authors, publishers, and event partners.
+2. **Send Follow-Ups**: Send follow-up tasks to collaborators or team members post-meetings.
 3. **Reminders and Notifications**: Automate reminders for key events like book launches, workshops, and committee meetings.
 4. **Email Thread Summaries**: Generate concise summaries of email discussions for efficient decision-making.
 
@@ -27,7 +27,7 @@ This project is a comprehensive task and meeting management system designed for 
    - As a user I can view a large dashboard with a categorized list of tasks and meetings.
    - Tasks are tagged with statuses and display upcoming deadlines.
 3. **Notifications**:
-   - I can receive notifications for new assignments and updates (Not yet).
+   - I can receive notifications for new assignments and updates.
    - I can rack overdue or upcoming tasks using badges and reminders.
 4. **Calendar View**:
    - I can visualize tasks in a calendar format and filter tasks by spaces or assignees.
@@ -77,7 +77,7 @@ CREATE TABLE subtasks (
   - Users log in or sign up with their email and password.
 - **Dashboard**:
   - Displays categorized tasks and meetings (e.g., `todo`, `in_progress`, `done`, `overdue`).
-- **Task Details**:
+- **Home**:
   - Allows users to view and update task details, including subtasks, assignees, and tags.
 - **Notifications**:
   - Provides updates on task changes or assignments.
