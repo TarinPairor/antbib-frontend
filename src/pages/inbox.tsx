@@ -19,7 +19,7 @@ export default function Inbox() {
         sdkl;fjhs;
         poiwesfhpoewrhigtnpovjnupfsiulfidjgpodfwjgo[wjkdv[odsakjv[dfkjv[odasvkjsnfow;reiha;gjiie;qijgbi;orewqijg;jv
       </p>
-      <h1 className="text-2xl font-bold mb-4 w-full">Inbox</h1>
+      <h1 className="font-bold mb-4 w-full">Inbox</h1>
       <div className="overflow-x-auto w-full">
         <Table className="min-w-full bg-white border border-gray-200">
           <TableHeader>
