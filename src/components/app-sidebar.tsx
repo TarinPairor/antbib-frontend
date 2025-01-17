@@ -29,11 +29,11 @@ export function AppSidebar() {
               Calendar
             </a>
           </SidebarGroupLabel>
-          <SidebarGroupLabel>
+          {/* <SidebarGroupLabel>
             <a className="text-lg" href="/settings">
               Settings
             </a>
-          </SidebarGroupLabel>
+          </SidebarGroupLabel> */}
         </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>
