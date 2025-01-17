@@ -102,7 +102,7 @@ export default function Home() {
               <TableHead>Status</TableHead>
               <TableHead>Start Date</TableHead>
               <TableHead>End Date</TableHead>
-              <TableHead>Priority</TableHead>
+              {/* <TableHead>Priority</TableHead> */}
               <TableHead>Tags</TableHead>
             </TableRow>
           </TableHeader>
@@ -124,7 +124,7 @@ export default function Home() {
                   {task.start_date ? formatDateTime(task.start_date) : ""}
                 </TableCell>
                 <TableCell>{formatDateTime(task.end_date) || "N/A"}</TableCell>
-                <TableCell>{task.priority}</TableCell>
+                {/* <TableCell>{task.priority}</TableCell> */}
                 <TableCell>
                   {task?.tags?.split(",").map((tag) => (
                     <Badge
