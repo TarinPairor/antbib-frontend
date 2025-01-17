@@ -54,6 +54,16 @@ This project is a comprehensive task and meeting management system designed for 
 5. `/email-thread-summarizer` - Email Summary Page:
    - Allows you to paste email threads for AI-generated summaries.
 
+### Creating Tasks
+
+In the `/dashboard` page, you can create tasks by clicking on the `Create Task` button at the top of the screen. You can then fill in the task details, including the title, description, status, tags, start date, end date, priority, and assignee. Once you have filled in the details, you can click on the `Ok` button to create the task.
+
+- Tags: Tags are used to categorize tasks and make them easier to filter. You can add multiple tags to a task by separating them with commas.
+
+### Updating Tasks
+
+In the `/dashboard` page, you can update tasks by clicking on the `Edit` button next to the task you want to update. You can then edit the task details and click on the `Ok` button to save the changes. If you assign someone to a task, they will receive a notification in their inbox.
+
 ## Database Schema
 
 ### User Table
@@ -92,9 +102,9 @@ CREATE TABLE subtasks (
 - **User Login/Signup**:
   - Users log in or sign up with their email and password.
 - **Dashboard**:
-  - Displays categorized tasks and meetings (e.g., `todo`, `in_progress`, `done`, `overdue`).
+  - Displays categorized tasks and meetings (e.g., `todo`, `in_progress`, `done`).
 - **Home**:
-  - Allows users to view and update task details, including subtasks, assignees, and tags.
+  - Allows users to view their own tasks, including assignees, and tags.
 - **Notifications**:
   - Provides updates on task changes or assignments.
 - **Calendar View**:
