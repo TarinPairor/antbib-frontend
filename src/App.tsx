@@ -11,6 +11,33 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import EmailThreadSummarizer from "./pages/email-thread-summarizer";
+import { createContext, useState, ReactNode } from "react";
+import { User } from "@/interfaces/types";
+import { fakeUsers } from "./constants/constants";
+
+// Create UserContext
+interface UserContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
+}
+
+export const UserContext = createContext<
+  | UserContextType
+  | {
+      user: User | null;
+      setUser: (user: User | null) => void;
+    }
+>({ user: fakeUsers[0], setUser: () => {} });
+
+const UserProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 
 export default function App() {
   const queryClient = new QueryClient({
@@ -29,23 +56,25 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <SidebarProvider>
-            <Login />
-            <AppSidebar />
-            <SidebarTrigger />
-            <Router>
-              <Routes>
-                {/* <Route path="/login" element={<Login />} /> */}
-                <Route path="/" element={<Home />} />
-                <Route path="/inbox" element={<Inbox />} />
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route
-                  path="/email-thread-summarizer"
-                  element={<EmailThreadSummarizer />}
-                />
-              </Routes>
-            </Router>
+            <UserProvider>
+              <Login />
+              <AppSidebar />
+              <SidebarTrigger />
+              <Router>
+                <Routes>
+                  {/* <Route path="/login" element={<Login />} /> */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/inbox" element={<Inbox />} />
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route
+                    path="/email-thread-summarizer"
+                    element={<EmailThreadSummarizer />}
+                  />
+                </Routes>
+              </Router>
+            </UserProvider>
           </SidebarProvider>
         </ThemeProvider>
       </QueryClientProvider>

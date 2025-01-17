@@ -33,6 +33,17 @@ export const useGetTasksByUserId = (userId: number) => {
   });
 };
 
+export const useGetTasksByUserEmail = (email: string) => {
+  return useQuery<Task[]>({
+    queryKey: ["tasks", "email", email],
+    queryFn: async () => {
+      const res = await fetch(`${backendUrl}/tasks/user/email/${email}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+};
+
 export const useGetUpcomingTasksByUserId = (userId: number) => {
   return useQuery<Task[]>({
     queryKey: ["tasks", userId, "upcoming"],

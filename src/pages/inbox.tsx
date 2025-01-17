@@ -15,7 +15,7 @@ export default function Inbox() {
 
   return (
     <div className="p-4 w-full">
-      <p className="text-white w-full">
+      <p className="w-full opacity-0">
         sdkl;fjhs;
         poiwesfhpoewrhigtnpovjnupfsiulfidjgpodfwjgo[wjkdv[odsakjv[dfkjv[odasvkjsnfow;reiha;gjiie;qijgbi;orewqijg;jv
       </p>

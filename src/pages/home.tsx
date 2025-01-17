@@ -6,54 +6,32 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-// import { fakeTasks } from "@/constants/constants";
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime, textWithEllipsis } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Task } from "@/interfaces/types";
-import { useGetTasksByUserId } from "@/apis/tasks";
+import { useGetTasksByUserEmail } from "@/apis/tasks";
 import { useUser } from "@clerk/clerk-react";
-import { useGetUserByEmail } from "@/apis/users";
 import { useGetTagsByUserId } from "@/apis/tags";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  // BreadcrumbLink,
-  // BreadcrumbSeparator,
-  // BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
+import { useContext } from "react";
+import { UserContext } from "@/App";
 
 export default function Home() {
+  const { user: user } = useContext(UserContext);
+  // console.log("user in home.tsx", user);
   const { isLoaded: isClerkLoaded, user: clerkUser } = useUser(); // Ensure Clerk is fully loaded
-  console.log("clerkUser", clerkUser);
-  const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
-  console.log("userEmail in home.tsx", userEmail);
+  // console.log("clerkUser", clerkUser);
+  // const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
+  // console.log("userEmail in home.tsx", userEmail);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log("clerkUser in home.tsx", clerkUser);
-  //   }, 1000);
-  // }, [clerkUser]);
-
-  // Fetch user by email
-  const { data: user, isLoading: isUserLoading } =
-    useGetUserByEmail("e1075551@u.nus.edu");
-  console.log("user in home.tsx", user);
-
-  // Extract userId, wait for user to load
-  const userId = user?.user_id;
-  console.log("userId in home.tsx", userId);
-
-  // Fetch tasks based on userId
   const { data: userTasks = [], isPending: isTasksPending } =
-    useGetTasksByUserId(userId || 0);
-  console.log("userTasks in home.tsx", userTasks);
+    useGetTasksByUserEmail(user?.user_email || "");
+  // console.log("userTasks in home.tsx", userTasks);
 
   const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
 
   // Handle loading states
-  if (!isClerkLoaded || isUserLoading) {
+  if (!isClerkLoaded) {
     return <div>Loading user information...</div>;
   }
 
@@ -61,9 +39,9 @@ export default function Home() {
     return <div>Loading tasks...</div>;
   }
 
-  const upcomingTasks = userTasks.filter(
-    (task) => new Date(task.end_date) > new Date()
-  );
+  const upcomingTasks = Array.isArray(userTasks)
+    ? userTasks.filter((task) => new Date(task.end_date) > new Date())
+    : [];
 
   if (!clerkUser) {
     return (
@@ -80,24 +58,36 @@ export default function Home() {
       <h1 className="text-2xl font-bold mb-4">Your Tasks</h1>
       <div className="overflow-x-auto mb-8">
         <Tabs>
-          <TabsList>
+          <TabsList className="flex gap-1">
             <TabsTrigger value="todo">Todo</TabsTrigger>
             <TabsTrigger value="developing">In Progress</TabsTrigger>
             <TabsTrigger value="done">Done</TabsTrigger>
           </TabsList>
           <TabsContent value="todo">
             <TaskTable
-              tasks={userTasks.filter((task) => task.status === "todo")}
+              tasks={
+                Array.isArray(userTasks)
+                  ? userTasks.filter((task) => task.status === "todo")
+                  : []
+              }
             />
           </TabsContent>
           <TabsContent value="developing">
             <TaskTable
-              tasks={userTasks.filter((task) => task.status === "developing")}
+              tasks={
+                Array.isArray(userTasks)
+                  ? userTasks.filter((task) => task.status === "developing")
+                  : []
+              }
             />
           </TabsContent>
           <TabsContent value="done">
             <TaskTable
-              tasks={userTasks.filter((task) => task.status === "done")}
+              tasks={
+                Array.isArray(userTasks)
+                  ? userTasks.filter((task) => task.status === "done")
+                  : []
+              }
             />
           </TabsContent>
         </Tabs>
@@ -112,41 +102,44 @@ export default function Home() {
               <TableHead>Status</TableHead>
               <TableHead>Start Date</TableHead>
               <TableHead>End Date</TableHead>
-              {/* <TableHead>Priority</TableHead> */}
               <TableHead>Tags</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {userTasks.map((task) => (
-              <TableRow key={task.task_id}>
-                <TableCell>{task.title}</TableCell>
-                <TableCell>{task.description}</TableCell>
-                <TableCell
-                  className={cn(
-                    task.status === "todo" ? "text-red-500" : "",
-                    task.status === "developing" ? "text-yellow-500" : "",
-                    task.status === "done" ? "text-green-500" : ""
-                  )}
-                >
-                  {task.status}
-                </TableCell>
-                <TableCell>
-                  {task.start_date ? formatDateTime(task.start_date) : ""}
-                </TableCell>
-                <TableCell>{formatDateTime(task.end_date) || "N/A"}</TableCell>
-                {/* <TableCell>{task.priority}</TableCell> */}
-                <TableCell>
-                  {task?.tags?.split(",").map((tag) => (
-                    <Badge
-                      key={tag}
-                      className="bg-gray-200 text-gray-800 p-1 m-1"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </TableCell>
-              </TableRow>
-            ))}
+            {Array.isArray(userTasks) &&
+              userTasks.map((task) => (
+                <TableRow key={task.task_id}>
+                  <TableCell>{task.title}</TableCell>
+                  <TableCell>
+                    {textWithEllipsis(task.description, 20)}
+                  </TableCell>
+                  <TableCell
+                    className={cn(
+                      task.status === "todo" ? "text-red-500" : "",
+                      task.status === "developing" ? "text-yellow-500" : "",
+                      task.status === "done" ? "text-green-500" : ""
+                    )}
+                  >
+                    {task.status}
+                  </TableCell>
+                  <TableCell>
+                    {task.start_date ? formatDateTime(task.start_date) : ""}
+                  </TableCell>
+                  <TableCell>
+                    {formatDateTime(task.end_date) || "N/A"}
+                  </TableCell>
+                  <TableCell>
+                    {task?.tags?.split(",").map((tag) => (
+                      <Badge
+                        key={tag}
+                        className="bg-gray-200 text-gray-800 p-1 m-1"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>
@@ -166,10 +159,10 @@ export default function Home() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {upcomingTasks?.map((task) => (
+            {upcomingTasks.map((task) => (
               <TableRow key={task.task_id}>
                 <TableCell>{task.title}</TableCell>
-                <TableCell>{task.description}</TableCell>
+                <TableCell>{textWithEllipsis(task.description, 20)}</TableCell>
                 <TableCell
                   className={cn(
                     task.status === "todo" ? "text-red-500" : "",
@@ -204,23 +197,25 @@ export default function Home() {
       <Tabs>
         <TabsList>
           {Array.isArray(tags) &&
-            tags.map((tag, index) => (
-              <TabsTrigger key={index} value={tag}>
-                {tag && (
-                  <Breadcrumb>
-                    <BreadcrumbList>
-                      <BreadcrumbItem>{tag}</BreadcrumbItem>
-                    </BreadcrumbList>
-                  </Breadcrumb>
-                )}
-              </TabsTrigger>
-            ))}
+            tags
+              ?.filter((tag) => tag !== "")
+              ?.map((tag, index) => {
+                return (
+                  <TabsTrigger key={index} value={tag}>
+                    {tag}
+                  </TabsTrigger>
+                );
+              })}
         </TabsList>
         {Array.isArray(tags) &&
           tags.map((tag, index) => (
             <TabsContent key={index} value={tag}>
               <TaskTable
-                tasks={userTasks.filter((task) => task?.tags?.includes(tag))}
+                tasks={
+                  Array.isArray(userTasks)
+                    ? userTasks.filter((task) => task?.tags?.includes(tag))
+                    : []
+                }
               />
             </TabsContent>
           ))}
@@ -240,7 +235,6 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
             <TableHead>Status</TableHead>
             <TableHead>Start Date</TableHead>
             <TableHead>End Date</TableHead>
-            {/* <TableHead>Priority</TableHead> */}
             <TableHead>Tags</TableHead>
           </TableRow>
         </TableHeader>
@@ -248,7 +242,7 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
           {tasks.map((task: Task) => (
             <TableRow key={task.task_id}>
               <TableCell>{task.title}</TableCell>
-              <TableCell>{task.description}</TableCell>
+              <TableCell>{textWithEllipsis(task.description, 20)}</TableCell>
               <TableCell
                 className={cn(
                   task.status === "todo" ? "text-red-500" : "",
@@ -262,7 +256,6 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
                 {task.start_date ? formatDateTime(task.start_date) : ""}
               </TableCell>
               <TableCell>{formatDateTime(task.end_date) || "N/A"}</TableCell>
-              {/* <TableCell>{task.priority}</TableCell> */}
               <TableCell>
                 {task?.tags?.split(",").map((tag) => (
                   <Badge

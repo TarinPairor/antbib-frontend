@@ -93,7 +93,7 @@ export default function Dashboard() {
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-bold mb-4 text-white">
+      <h1 className="text-2xl font-bold mb-4 opacity-0">
         skjdvfjkdhbodlhbivspk;ldjk;sdlvj;sdolv;lsdv
         dlfkgjldfpjgpdflkjbghwdokjsbga;lkgvqpbdfk''aklvs
       </h1>
