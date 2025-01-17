@@ -194,11 +194,13 @@ export default function Home() {
           {Array.isArray(tags) &&
             tags.map((tag, index) => (
               <TabsTrigger key={index} value={tag}>
-                <Breadcrumb>
-                  <BreadcrumbList>
-                    <BreadcrumbItem>{tag}</BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
+                {tag && (
+                  <Breadcrumb>
+                    <BreadcrumbList>
+                      <BreadcrumbItem>{tag}</BreadcrumbItem>
+                    </BreadcrumbList>
+                  </Breadcrumb>
+                )}
               </TabsTrigger>
             ))}
         </TabsList>
