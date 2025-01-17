@@ -14,15 +14,15 @@ import { useGetTasksByUserEmail } from "@/apis/tasks";
 import { useUser } from "@clerk/clerk-react";
 import { useGetTagsByUserId } from "@/apis/tags";
 import { useContext } from "react";
-import { UserContext } from "@/App";
+import { UserContext } from "@/contexts/user-context";
 
 export default function Home() {
   const { user: user } = useContext(UserContext);
   // console.log("user in home.tsx", user);
   const { isLoaded: isClerkLoaded, user: clerkUser } = useUser(); // Ensure Clerk is fully loaded
-  // console.log("clerkUser", clerkUser);
-  // const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
-  // console.log("userEmail in home.tsx", userEmail);
+
+  console.log("clerkUser in home.tsx", clerkUser);
+  console.log("user in home.tsx", user);
 
   const { data: userTasks = [], isPending: isTasksPending } =
     useGetTasksByUserEmail(user?.user_email || "");

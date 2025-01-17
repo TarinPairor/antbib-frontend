@@ -11,23 +11,11 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import EmailThreadSummarizer from "./pages/email-thread-summarizer";
-import { createContext, useState, ReactNode } from "react";
+import { useState, ReactNode } from "react";
 import { User } from "@/interfaces/types";
-import { fakeUsers } from "./constants/constants";
+import { UserContext } from "./contexts/user-context";
 
 // Create UserContext
-interface UserContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
-}
-
-export const UserContext = createContext<
-  | UserContextType
-  | {
-      user: User | null;
-      setUser: (user: User | null) => void;
-    }
->({ user: fakeUsers[0], setUser: () => {} });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);

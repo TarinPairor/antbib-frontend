@@ -7,7 +7,7 @@ import {
 } from "@clerk/clerk-react";
 import { useEffect, useState, useContext } from "react";
 import { useCreateUser, useGetUserIdByEmail } from "@/apis/users";
-import { UserContext } from "@/App";
+import { UserContext } from "@/contexts/user-context";
 
 export default function Login() {
   const { user: clerkUser } = useClerkUser();
@@ -46,7 +46,7 @@ export default function Login() {
         <UserButton />
         {user && (
           <div>
-            <p>Hi {user.username}</p>
+            <p>Hi {clerkUser?.username}</p>
             {/* <p>Email: {user.user_email}</p> */}
           </div>
         )}
