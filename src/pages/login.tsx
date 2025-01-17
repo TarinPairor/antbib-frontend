@@ -46,7 +46,7 @@ export default function Login() {
         <UserButton />
         {user && (
           <div>
-            <p>Hi {clerkUser?.username}</p>
+            <p>Hi {user?.username}</p>
             {/* <p>Email: {user.user_email}</p> */}
           </div>
         )}
