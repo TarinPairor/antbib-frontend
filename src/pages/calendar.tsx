@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useGetAllTasks } from "@/apis/tasks";
 import dayjs from "dayjs";
 import { Task } from "@/interfaces/types";
+import Centralizer from "@/components/centralizer";
 
 export default function Calendar() {
   const { data: tasks, isLoading, error } = useGetAllTasks();
@@ -41,10 +42,25 @@ export default function Calendar() {
     setCurrentMonth(currentMonth.add(1, "month"));
   };
 
+  if (isLoading) {
+    return (
+      <Centralizer className="top-1/2">
+        <div>Loading...</div>
+      </Centralizer>
+    );
+  }
+
+  if (error) {
+    return (
+      <Centralizer className="top-1/2">
+        <div>Error: {error.message}</div>
+      </Centralizer>
+    );
+  }
+
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
       <h1 className="text-xl font-bold mb-4">Calendar</h1>
-
       {/* Month Navigation */}
       <div className="flex justify-between items-center mb-4">
         <button
@@ -64,44 +80,38 @@ export default function Calendar() {
         </button>
       </div>
 
-      {isLoading ? (
-        <div>Loading tasks...</div>
-      ) : error ? (
-        <div>Error loading tasks</div>
-      ) : (
-        <div className="grid grid-cols-7 gap-1">
-          {days.map((date) => {
-            const tasksForDate = getTasksForDate(date);
+      <div className="grid grid-cols-7 gap-1">
+        {days.map((date) => {
+          const tasksForDate = getTasksForDate(date);
 
-            return (
-              <div
-                key={date.toISOString()}
-                className={`border p-2 rounded-md aspect-square flex flex-col justify-between ${
-                  today.isSame(date, "day") ? "bg-blue-200" : "bg-white"
-                } hover:bg-gray-100 cursor-pointer`}
-                onClick={() => handleDateClick(date)}
-              >
-                <div className="text-right text-sm font-semibold">
-                  {dayjs(date).format("D")}
-                </div>
-                <div className="mt-2 space-y-1 flex-grow overflow-hidden">
-                  {tasksForDate.map((task) => (
-                    <div
-                      key={task.task_id}
-                      className="text-xs bg-blue-100 p-1 rounded-md truncate"
-                    >
-                      <div className="font-medium">{task.title}</div>
-                      <div className="text-gray-600">
-                        {dayjs(task.end_date).format("HH:mm")}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+          return (
+            <div
+              key={date.toISOString()}
+              className={`border p-2 rounded-md aspect-square flex flex-col justify-between truncate ${
+                today.isSame(date, "day") ? "bg-blue-200" : "bg-white"
+              } hover:bg-gray-100 cursor-pointer`}
+              onClick={() => handleDateClick(date)}
+            >
+              <div className="text-right text-sm font-semibold">
+                {dayjs(date).format("D")}
               </div>
-            );
-          })}
-        </div>
-      )}
+              <div className="mt-2 space-y-1 flex-grow overflow-hidden">
+                {tasksForDate.map((task) => (
+                  <div
+                    key={task.task_id}
+                    className="text-xs bg-blue-100 p-1 rounded-md truncate"
+                  >
+                    <div className="font-medium">{task.title}</div>
+                    <div className="text-gray-600">
+                      {dayjs(task.end_date).format("HH:mm")}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {selectedDate && (
         <div className="mt-4">

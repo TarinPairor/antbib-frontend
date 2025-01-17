@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/ui/date-picker";
 import { useUser } from "@clerk/clerk-react";
+import Typewriter, { TypewriterClass } from "typewriter-effect";
 
 export default function Dashboard() {
   const clerkUser = useUser().user;
@@ -98,7 +99,20 @@ export default function Dashboard() {
         dlfkgjldfpjgpdflkjbghwdokjsbga;lkgvqpbdfk''aklvs
       </h1>
       <div className="flex flex-col justify-between items-center mb-4 w-full">
-        <h1 className="text-2xl font-bold mb-4 w-full">Dashboard</h1>
+        <h1 className=" font-bold mb-4 w-full">Dashboard</h1>
+        <p className="mb-2">
+          <Typewriter
+            options={{ loop: true }}
+            onInit={(typewriter: TypewriterClass) => {
+              typewriter
+                .typeString("View all the tasks here!")
+                .pauseFor(1000)
+                .deleteAll()
+                .typeString("Create, edit, and delete any task!")
+                .start();
+            }}
+          />
+        </p>
         <Button
           onClick={handleCreateTask}
           disabled={createTaskMutation.isPending}

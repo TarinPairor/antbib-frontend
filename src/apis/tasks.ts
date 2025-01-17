@@ -18,20 +18,20 @@ export const useGetAllTasks = () => {
   });
 };
 
-export const useGetTasksByUserId = (userId: number) => {
-  return useQuery<Task[]>({
-    queryKey: ["tasks", userId],
-    queryFn: async () => {
-      console.log("useGetTasksByUserId userId", userId);
-      console.log("userId", userId);
-      const res = await fetch(`${backendUrl}/tasks/user/${userId}`);
-      const data = await res.json();
-      return data;
-    },
-    // refetchOnWindowFocus: false, // Prevent refetching on window focus
-    // refetchOnMount: false, // Prevent refetching when component mounts
-  });
-};
+// export const useGetTasksByUserId = (userId: number) => {
+//   return useQuery<Task[]>({
+//     queryKey: ["tasks", userId],
+//     queryFn: async () => {
+//       console.log("useGetTasksByUserId userId", userId);
+//       console.log("userId", userId);
+//       const res = await fetch(`${backendUrl}/tasks/user/${userId}`);
+//       const data = await res.json();
+//       return data;
+//     },
+//     // refetchOnWindowFocus: false, // Prevent refetching on window focus
+//     // refetchOnMount: false, // Prevent refetching when component mounts
+//   });
+// };
 
 export const useGetTasksByUserEmail = (email: string) => {
   return useQuery<Task[]>({
@@ -44,55 +44,56 @@ export const useGetTasksByUserEmail = (email: string) => {
   });
 };
 
-export const useGetUpcomingTasksByUserId = (userId: number) => {
-  return useQuery<Task[]>({
-    queryKey: ["tasks", userId, "upcoming"],
-    queryFn: async () => {
-      const res = await fetch(`${backendUrl}/tasks/user/${userId}/upcoming`);
-      const data = await res.json();
-      return data;
-    },
-  });
-};
+// export const useGetUpcomingTasksByUserId = (userId: number) => {
+//   return useQuery<Task[]>({
+//     queryKey: ["tasks", userId, "upcoming"],
+//     queryFn: async () => {
+//       const res = await fetch(`${backendUrl}/tasks/user/${userId}/upcoming`);
+//       const data = await res.json();
+//       return data;
+//     },
+//   });
+// };
 
-export const useGetTasksByUserIdAndTag = (userId: number, tag: string) => {
-  return useQuery<Task[]>({
-    queryKey: ["tasks", userId, "tag", tag],
-    queryFn: async () => {
-      const res = await fetch(`${backendUrl}/tasks/user/${userId}/tag/${tag}`);
-      const data = await res.json();
-      return data;
-    },
-  });
-};
+// export const useGetTasksByUserIdAndTag = (userId: number, tag: string) => {
+//   return useQuery<Task[]>({
+//     queryKey: ["tasks", userId, "tag", tag],
+//     queryFn: async () => {
+//       const res = await fetch(`${backendUrl}/tasks/user/${userId}/tag/${tag}`);
+//       const data = await res.json();
+//       return data;
+//     },
+//   });
+// };
 
-export const useGetTasksByUserIdAndStatus = (
-  userId: number,
-  status: string
-) => {
-  return useQuery<Task[]>({
-    queryKey: ["tasks", userId, "status", status],
-    queryFn: async () => {
-      const res = await fetch(
-        `${backendUrl}/tasks/user/${userId}/status/${status}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
-};
+// export const useGetTasksByUserIdAndStatus = (
+//   userId: number,
+//   status: string
+// ) => {
+//   return useQuery<Task[]>({
+//     queryKey: ["tasks", userId, "status", status],
+//     queryFn: async () => {
+//       const res = await fetch(
+//         `${backendUrl}/tasks/user/${userId}/status/${status}`
+//       );
+//       const data = await res.json();
+//       return data;
+//     },
+//   });
+// };
 
-export const useGetTasksByStatus = (status: string) => {
-  return useQuery<Task[]>({
-    queryKey: ["tasks", "status", status],
-    queryFn: async () => {
-      const res = await fetch(`${backendUrl}/tasks/status/${status}`);
-      const data = await res.json();
-      return data;
-    },
-  });
-};
+// export const useGetTasksByStatus = (status: string) => {
+//   return useQuery<Task[]>({
+//     queryKey: ["tasks", "status", status],
+//     queryFn: async () => {
+//       const res = await fetch(`${backendUrl}/tasks/status/${status}`);
+//       const data = await res.json();
+//       return data;
+//     },
+//   });
+// };
 
+// ================== SUBTASKS ==================
 export const useGetSubtasksByTaskId = (taskId: string) => {
   return useQuery<Subtask[]>({
     queryKey: ["tasks", taskId, "subtasks"],
@@ -137,33 +138,33 @@ export const useCreateTask = () => {
   });
 };
 
-export const useUpdateTaskAssignee = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async ({
-      taskId,
-      assignedTo,
-    }: {
-      taskId: string;
-      assignedTo: number;
-    }) => {
-      const res = await fetch(`${backendUrl}/tasks/${taskId}/assignee`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ assigned_to: assignedTo }),
-      });
-      const data = await res.json();
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["tasks"],
-      });
-    },
-  });
-};
+// export const useUpdateTaskAssignee = () => {
+//   const queryClient = useQueryClient();
+//   return useMutation({
+//     mutationFn: async ({
+//       taskId,
+//       assignedTo,
+//     }: {
+//       taskId: string;
+//       assignedTo: number;
+//     }) => {
+//       const res = await fetch(`${backendUrl}/tasks/${taskId}/assignee`, {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ assigned_to: assignedTo }),
+//       });
+//       const data = await res.json();
+//       return data;
+//     },
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({
+//         queryKey: ["tasks"],
+//       });
+//     },
+//   });
+// };
 
 export const useUpdateTask = () => {
   const queryClient = useQueryClient();

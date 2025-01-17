@@ -6,15 +6,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn, formatDateTime, textWithEllipsis } from "@/lib/utils";
+import { formatDateTime, textWithEllipsis } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Task } from "@/interfaces/types";
 import { useGetTasksByUserEmail } from "@/apis/tasks";
 import { useUser } from "@clerk/clerk-react";
-import { useGetTagsByUserId } from "@/apis/tags";
+import { useGetTagsByUserEmail } from "@/apis/tags";
 import { useContext } from "react";
 import { UserContext } from "@/contexts/user-context";
+import LandingPage from "@/components/home/landing-page";
 
 export default function Home() {
   const { user: user } = useContext(UserContext);
@@ -26,9 +27,9 @@ export default function Home() {
 
   const { data: userTasks = [], isPending: isTasksPending } =
     useGetTasksByUserEmail(user?.user_email || "");
-  // console.log("userTasks in home.tsx", userTasks);
 
-  const { data: tags = [] } = useGetTagsByUserId(user?.user_id);
+  const { data: tags = [] } = useGetTagsByUserEmail(user?.user_email);
+  console.log("tags in home.tsx", tags);
 
   // Handle loading states
   if (!isClerkLoaded) {
@@ -44,20 +45,13 @@ export default function Home() {
     : [];
 
   if (!clerkUser) {
-    return (
-      <div className="p-4 flex flex-col items-center">
-        <img src="/ant.svg" alt="AntBib Logo" className="w-24 h-24" />
-        <h1 className="text-2xl font-bold mb-4">Welcome to AntBib</h1>
-        <p>Please sign in to view your tasks.</p>
-      </div>
-    );
+    return <LandingPage />;
   }
 
-  return (
-    <div className="p-4 w-full">
-      <h1 className="text-2xl font-bold mb-4">Your Tasks</h1>
+  const YourTasks = () => {
+    return (
       <div className="overflow-x-auto mb-8">
-        <Tabs>
+        <Tabs defaultValue="todo">
           <TabsList className="flex gap-1">
             <TabsTrigger value="todo">Todo</TabsTrigger>
             <TabsTrigger value="developing">In Progress</TabsTrigger>
@@ -92,7 +86,11 @@ export default function Home() {
           </TabsContent>
         </Tabs>
       </div>
-      <h1 className="text-2xl font-bold mb-4">All Tasks</h1>
+    );
+  };
+
+  const AllTasks = () => {
+    return (
       <div className="overflow-x-auto mb-8">
         <Table className="min-w-full bg-white border">
           <TableHeader>
@@ -113,14 +111,18 @@ export default function Home() {
                   <TableCell>
                     {textWithEllipsis(task.description, 20)}
                   </TableCell>
-                  <TableCell
-                    className={cn(
-                      task.status === "todo" ? "text-red-500" : "",
-                      task.status === "developing" ? "text-yellow-500" : "",
-                      task.status === "done" ? "text-green-500" : ""
-                    )}
-                  >
-                    {task.status}
+                  <TableCell>
+                    <Badge
+                      variant={`${
+                        task.status === "todo"
+                          ? "red"
+                          : task.status === "developing"
+                          ? "yellow"
+                          : "green"
+                      }`}
+                    >
+                      {task.status}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     {task.start_date ? formatDateTime(task.start_date) : ""}
@@ -143,8 +145,11 @@ export default function Home() {
           </TableBody>
         </Table>
       </div>
+    );
+  };
 
-      <h2 className="text-xl font-bold mb-4">Upcoming Tasks</h2>
+  const UpcomingTasks = () => {
+    return (
       <div className="overflow-x-auto mb-8">
         <Table className="min-w-full bg-white border">
           <TableHeader>
@@ -154,7 +159,7 @@ export default function Home() {
               <TableHead>Status</TableHead>
               <TableHead>Start Date</TableHead>
               <TableHead>End Date</TableHead>
-              <TableHead>Priority</TableHead>
+              {/* <TableHead>Priority</TableHead> */}
               <TableHead>Tags</TableHead>
             </TableRow>
           </TableHeader>
@@ -163,14 +168,18 @@ export default function Home() {
               <TableRow key={task.task_id}>
                 <TableCell>{task.title}</TableCell>
                 <TableCell>{textWithEllipsis(task.description, 20)}</TableCell>
-                <TableCell
-                  className={cn(
-                    task.status === "todo" ? "text-red-500" : "",
-                    task.status === "developing" ? "text-yellow-500" : "",
-                    task.status === "done" ? "text-green-500" : ""
-                  )}
-                >
-                  {task.status}
+                <TableCell>
+                  <Badge
+                    variant={`${
+                      task.status === "todo"
+                        ? "red"
+                        : task.status === "developing"
+                        ? "yellow"
+                        : "green"
+                    }`}
+                  >
+                    {task.status}
+                  </Badge>
                 </TableCell>
                 <TableCell>
                   {task.start_date ? formatDateTime(task.start_date) : ""}
@@ -192,8 +201,11 @@ export default function Home() {
           </TableBody>
         </Table>
       </div>
+    );
+  };
 
-      <h2 className="text-xl font-bold mb-4">My Work</h2>
+  const MyWork = () => {
+    return (
       <Tabs>
         <TabsList>
           {Array.isArray(tags) &&
@@ -220,6 +232,18 @@ export default function Home() {
             </TabsContent>
           ))}
       </Tabs>
+    );
+  };
+  return (
+    <div className="p-4 w-full">
+      <h1 className="text-2xl font-bold mb-4">Your Tasks</h1>
+      <YourTasks />
+      <h1 className="text-2xl font-bold mb-4">All Tasks</h1>
+      <AllTasks />
+      <h2 className="text-xl font-bold mb-4">Upcoming Tasks</h2>
+      <UpcomingTasks />
+      <h2 className="text-xl font-bold mb-4">My Work</h2>
+      <MyWork />
     </div>
   );
 }
@@ -243,14 +267,18 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
             <TableRow key={task.task_id}>
               <TableCell>{task.title}</TableCell>
               <TableCell>{textWithEllipsis(task.description, 20)}</TableCell>
-              <TableCell
-                className={cn(
-                  task.status === "todo" ? "text-red-500" : "",
-                  task.status === "developing" ? "text-yellow-500" : "",
-                  task.status === "done" ? "text-green-500" : ""
-                )}
-              >
-                {task.status}
+              <TableCell>
+                <Badge
+                  variant={`${
+                    task.status === "todo"
+                      ? "red"
+                      : task.status === "developing"
+                      ? "yellow"
+                      : "green"
+                  }`}
+                >
+                  {task.status}
+                </Badge>
               </TableCell>
               <TableCell>
                 {task.start_date ? formatDateTime(task.start_date) : ""}

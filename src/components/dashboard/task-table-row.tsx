@@ -35,6 +35,23 @@ interface TaskTableRowProps {
   task: Task;
 }
 
+const tagColors = [
+  "bg-red-500",
+  "bg-yellow-500",
+  "bg-green-500",
+  "bg-blue-500",
+  "bg-purple-500",
+  "bg-pink-500",
+  "bg-indigo-500",
+  "bg-teal-500",
+  "bg-cyan-500",
+  "bg-orange-500",
+];
+
+const getRandomColorClass = () => {
+  return tagColors[Math.floor(Math.random() * tagColors.length)];
+};
+
 export default function TaskTableRow({ task }: TaskTableRowProps) {
   const { data: allUsers } = useGetAllUsers();
   const { data: user } = useGetUserById(task.assigned_to);
@@ -101,7 +118,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
             ?.split(",")
             .slice(0, 1)
             .map((tag) => (
-              <Badge key={tag} className="bg-gray-200 text-gray-800 p-1 m-1">
+              <Badge key={tag} className={`${getRandomColorClass()} p-1 m-1`}>
                 {tag}
               </Badge>
             ))}
