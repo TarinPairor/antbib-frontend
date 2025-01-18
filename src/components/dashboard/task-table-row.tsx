@@ -164,7 +164,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
           ...
         </TableCell>
         <TableCell>
-          <Button onClick={showModal} className="bg-blue-500 text-white">
+          <Button onClick={showModal} className="bg-black text-white">
             Edit
           </Button>
         </TableCell>
