@@ -123,8 +123,8 @@ export default function Calendar() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center mx-auto p-4">
-      <div className="w-full flex justify-between items-center mb-4">
+    <div className="flex flex-col mx-auto p-4 text-xs">
+      <div className="w-full flex flex-col items-start mb-4">
         <h1 className=" font-bold">Calendar</h1>
         <div className="flex gap-4 items-center">
           <button
@@ -164,7 +164,7 @@ export default function Calendar() {
         </div>
       </div>
 
-      <div className="flex select-none text-xs w-full">
+      <div className="flex overflow-x-auto">
         {/* Time labels column */}
         <div className="flex flex-col w-20 flex-shrink-0">
           <div className="h-10 border border-gray-300 flex items-center justify-center bg-gray-50" />
@@ -179,12 +179,12 @@ export default function Calendar() {
         </div>
 
         {/* Days and grid */}
-        <div className="flex-1 overflow-x-auto">
-          <div className="flex min-w-full">
+        <div className="w-[50%] overflow-x-auto select-none focus-within:outline-none">
+          <div className="flex" tabIndex={0}>
             {days.map((day) => (
-              <div key={day[1]} className="flex-1 min-w-[75px]">
+              <div key={day[1]} className="flex-1 min-w-8">
                 <div
-                  className={`h-10 border border-gray-300 flex flex-col items-center justify-center text-sm
+                  className={`h-10 border border-gray-300 flex flex-col items-center justify-center text-xs
                     ${isToday(day[0]) ? "bg-blue-50" : ""}`}
                 >
                   <div
@@ -192,15 +192,18 @@ export default function Calendar() {
                   >
                     {day[0]}
                   </div>
-                  <div className="text-xs text-gray-500">
+                  {/* <div className="text-xs text-gray-500">
                     {new Date(day[2]).toLocaleDateString(undefined, {
                       weekday: "short",
                     })}
-                  </div>
+                  </div> */}
                 </div>
                 <div className="relative">
                   {timeLabels.slice(0, -1).map((_, index) => (
-                    <div key={index} className="h-10 border border-gray-300" />
+                    <div
+                      key={index}
+                      className="h-10 border-r border-gray-300"
+                    />
                   ))}
                   <div className="absolute inset-0 flex">
                     {tasksWithRanges?.map((task, taskIndex) => {
@@ -258,7 +261,7 @@ export default function Calendar() {
           <DialogHeader>
             <DialogTitle>{selectedTask.title}</DialogTitle>
           </DialogHeader>
-          <div className="text-sm text-gray-600 mb-4">
+          <div className="text-xs text-gray-600 mb-4">
             {formatTaskTime(selectedTask)}
           </div>
           <p className="text-sm">{selectedTask.description}</p>
