@@ -66,11 +66,14 @@ export default function LandingPage() {
           </p>
         </div>
         <ScrollArea>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 whitespace-normal">
+          <div className="p-2 flex flex-wrap gap-4 aspect-video">
             {features.map((feature, index) => (
-              <Card key={index} className="shadow-lg">
+              <Card
+                key={index}
+                className="shadow-lg min-w-[250px] md:min-w-[calc(60%-1rem)] lg:min-w-[calc(40%-1rem)]"
+              >
                 <CardHeader>
-                  <CardTitle className="text-2xl">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>{feature.description}</CardDescription>
