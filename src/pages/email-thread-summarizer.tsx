@@ -56,8 +56,8 @@ export default function EmailThreadSummarizer() {
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
-      <div className="flex flex-col justify-between items-center mb-4  gap-3">
-        <h1 className="text-2xl font-bold mb-4 ">Email Thread Summarizer</h1>
+      <div className="flex flex-col justify-between items-center mb-4 gap-3">
+        <h1 className="text-2xl font-bold mb-4 ">Email Thread Summary</h1>
         <p>
           Summarize an email thread into key points for each user involved. Just
           copy and paste the email thread and click "Summarize".
