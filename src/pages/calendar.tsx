@@ -3,6 +3,7 @@ import { useGetAllTasks } from "@/apis/tasks";
 import dayjs from "dayjs";
 import { Task } from "@/interfaces/types";
 import Centralizer from "@/components/centralizer";
+import LoadingSpinner from "@/components/loading-spinner";
 
 export default function Calendar() {
   const { data: tasks, isLoading, error } = useGetAllTasks();
@@ -45,7 +46,7 @@ export default function Calendar() {
   if (isLoading) {
     return (
       <Centralizer className="top-1/2">
-        <div>Loading...</div>
+        <LoadingSpinner className="fill-blue-500" />
       </Centralizer>
     );
   }
