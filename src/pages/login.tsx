@@ -41,7 +41,7 @@ export default function Login() {
     <div className="absolute top-0 right-0 p-4">
       <SignedOut>
         <SignInButton>
-          <div className="bg-white border-2 p-2 hover:bg-gray-300 rounded-md">
+          <div className=" bg-black border-2 p-2 text-white hover:bg-gray-700 rounded-md hover:cursor-pointer">
             Sign in
           </div>
         </SignInButton>
