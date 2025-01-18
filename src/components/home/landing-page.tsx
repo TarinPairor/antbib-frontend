@@ -66,11 +66,11 @@ export default function LandingPage() {
           </p>
         </div>
         <ScrollArea>
-          <div className="flex gap-2 aspect-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 whitespace-normal">
             {features.map((feature, index) => (
               <Card key={index} className="shadow-lg">
                 <CardHeader>
-                  <CardTitle className="text-3xl">{feature.title}</CardTitle>
+                  <CardTitle className="text-2xl">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>{feature.description}</CardDescription>
