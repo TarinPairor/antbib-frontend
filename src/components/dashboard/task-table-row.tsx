@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,18 +24,18 @@ import { useDeleteTask, useUpdateTask } from "@/apis/tasks";
 import { useGetAllUsers, useGetUserById } from "@/apis/users";
 import { textWithEllipsis } from "@/lib/utils";
 import { useCreateNotification } from "@/apis/notifications";
-import React from "react";
 
 const TimeSelector = ({
   date,
   onChange,
   className = "",
 }: {
-  date: string;
+  date: string | null;
   onChange: (date: string) => void;
   className?: string;
 }) => {
-  const timeDate = new Date(date);
+  // Initialize with current time if date is null
+  const timeDate = date ? new Date(date) : new Date();
   const [hours, setHours] = React.useState(
     timeDate.getHours().toString().padStart(2, "0")
   );
@@ -61,7 +61,8 @@ const TimeSelector = ({
     numValue = Math.max(0, Math.min(numValue, max));
     setter(numValue.toString().padStart(2, "0"));
 
-    const newDate = new Date(date);
+    // If date is null, use current date as base
+    const newDate = date ? new Date(date) : new Date();
     newDate.setHours(parseInt(hours), parseInt(minutes), parseInt(seconds));
     onChange(newDate.toISOString());
   };
