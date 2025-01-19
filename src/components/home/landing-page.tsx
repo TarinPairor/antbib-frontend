@@ -22,7 +22,7 @@ export default function LandingPage() {
         "Send follow-up tasks to collaborators or team members post-meetings.",
     },
     {
-      title: "Reminders and Notifications",
+      title: "Reminders",
       description:
         "Automate reminders for key events like book launches, workshops, and committee meetings.",
     },
