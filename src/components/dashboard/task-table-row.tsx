@@ -24,6 +24,7 @@ import { useDeleteTask, useUpdateTask } from "@/apis/tasks";
 import { useGetAllUsers, useGetUserById } from "@/apis/users";
 import { textWithEllipsis } from "@/lib/utils";
 import { useCreateNotification } from "@/apis/notifications";
+import { useUser } from "@clerk/clerk-react";
 
 const TimeSelector = ({
   date,
@@ -232,9 +233,11 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
           ...
         </TableCell>
         <TableCell>
-          <Button onClick={showModal} className="bg-black text-white">
-            Edit
-          </Button>
+          {useUser().user?.primaryEmailAddress && (
+            <Button onClick={showModal} className="bg-black text-white">
+              Edit
+            </Button>
+          )}
         </TableCell>
       </TableRow>
 

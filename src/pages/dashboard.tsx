@@ -123,14 +123,16 @@ export default function Dashboard() {
             }}
           />
         </p>
-        <Button
-          onClick={handleCreateTask}
-          disabled={createTaskMutation.isPending}
-          className="flex items-center gap-2 w-full"
-        >
-          <Plus className="h-4 w-4" />
-          {createTaskMutation.isPending ? "Creating..." : "Create Task"}
-        </Button>
+        {userEmail && (
+          <Button
+            onClick={handleCreateTask}
+            disabled={createTaskMutation.isPending}
+            className="flex items-center gap-2 w-full"
+          >
+            <Plus className="h-4 w-4" />
+            {createTaskMutation.isPending ? "Creating..." : "Create Task"}
+          </Button>
+        )}
       </div>
 
       <Accordion
@@ -187,6 +189,7 @@ export default function Dashboard() {
               onChange={handleStatusChange}
               className="mb-2"
             />
+            <p>Assign To</p>
             <Select
               defaultValue={newTask.assigned_to.toString()}
               onValueChange={(value) =>
@@ -205,7 +208,7 @@ export default function Dashboard() {
                 ))}
               </SelectContent>
             </Select>
-
+            <p>Status</p>
             <Select
               defaultValue={newTask.status}
               onValueChange={(value) =>
@@ -241,6 +244,7 @@ export default function Dashboard() {
                 }
               />
             </>
+            <p>Tags</p>
             <Input
               name="tags"
               placeholder="Tags"
