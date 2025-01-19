@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  TableRow,
-  TableCell,
-  // Table,
-  // TableHeader,
-  // TableBody,
-  // TableHead,
-} from "@/components/ui/table";
+import { TableRow, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Task } from "@/interfaces/types";
@@ -31,14 +24,94 @@ import { useDeleteTask, useUpdateTask } from "@/apis/tasks";
 import { useGetAllUsers, useGetUserById } from "@/apis/users";
 import { textWithEllipsis } from "@/lib/utils";
 import { useCreateNotification } from "@/apis/notifications";
+import React from "react";
+
+const TimeSelector = ({
+  date,
+  onChange,
+  className = "",
+}: {
+  date: string;
+  onChange: (date: string) => void;
+  className?: string;
+}) => {
+  const timeDate = new Date(date);
+  const [hours, setHours] = React.useState(
+    timeDate.getHours().toString().padStart(2, "0")
+  );
+  const [minutes, setMinutes] = React.useState(
+    timeDate.getMinutes().toString().padStart(2, "0")
+  );
+  const [seconds, setSeconds] = React.useState(
+    timeDate.getSeconds().toString().padStart(2, "0")
+  );
+
+  const validateAndUpdateTime = (
+    value: string,
+    max: number,
+    setter: (value: string) => void
+  ) => {
+    let numValue = parseInt(value);
+    if (value === "") {
+      setter("00");
+      return;
+    }
+    if (isNaN(numValue)) return;
+
+    numValue = Math.max(0, Math.min(numValue, max));
+    setter(numValue.toString().padStart(2, "0"));
+
+    const newDate = new Date(date);
+    newDate.setHours(parseInt(hours), parseInt(minutes), parseInt(seconds));
+    onChange(newDate.toISOString());
+  };
+
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="flex items-center gap-1">
+        <Input
+          type="number"
+          min={0}
+          max={23}
+          value={hours}
+          onChange={(e) => validateAndUpdateTime(e.target.value, 23, setHours)}
+          className="w-16 text-center"
+          placeholder="HH"
+        />
+        <span className="text-gray-500">:</span>
+        <Input
+          type="number"
+          min={0}
+          max={59}
+          value={minutes}
+          onChange={(e) =>
+            validateAndUpdateTime(e.target.value, 59, setMinutes)
+          }
+          className="w-16 text-center"
+          placeholder="MM"
+        />
+        <span className="text-gray-500">:</span>
+        <Input
+          type="number"
+          min={0}
+          max={59}
+          value={seconds}
+          onChange={(e) =>
+            validateAndUpdateTime(e.target.value, 59, setSeconds)
+          }
+          className="w-16 text-center"
+          placeholder="SS"
+        />
+      </div>
+    </div>
+  );
+};
 
 interface TaskTableRowProps {
   task: Task;
 }
 
 const tagColors = [
-  // "bg-red-500",
-  // "bg-yellow-500",
   "bg-green-500",
   "bg-blue-500",
   "bg-purple-500",
@@ -57,20 +130,6 @@ const tagColors = [
   "bg-blue-400",
   "bg-purple-400",
   "bg-pink-400",
-  "bg-indigo-400",
-  "bg-teal-400",
-  "bg-cyan-400",
-  "bg-orange-400",
-  "bg-amber-400",
-  "bg-lime-400",
-  "bg-emerald-400",
-  "bg-violet-400",
-  "bg-rose-400",
-  "bg-cyan-400",
-  "bg-green-300",
-  "bg-blue-300",
-  "bg-purple-300",
-  "bg-pink-300",
 ];
 
 const getRandomColorClass = () => {
@@ -95,11 +154,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
   const handleOk = () => {
     updateTask(editedTask);
 
-    // if assignee_to is not the same as the original user, send a notification
-    console.log(editedTask.assigned_to);
-    console.log(user?.user_id);
     if (editedTask.assigned_to !== user?.user_id) {
-      console.log("sending notification");
       createNotification.mutate({
         user_id: editedTask.assigned_to,
         message: `You have been assigned a new task: ${editedTask.title}`,
@@ -132,6 +187,18 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
   const handleAssigneeChange = (value: string) => {
     setEditedTask({ ...editedTask, assigned_to: parseInt(value) });
   };
+
+  // const handleTimeChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   dateType: "start_date" | "end_date"
+  // ) => {
+  //   const { value } = e.target;
+  //   const date = new Date(editedTask[dateType]);
+  //   const [hours, minutes, seconds] = value.split(":").map(Number);
+
+  //   date.setHours(hours, minutes, seconds);
+  //   setEditedTask({ ...editedTask, [dateType]: date.toISOString() });
+  // };
 
   return (
     <>
@@ -231,6 +298,13 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                   setEditedTask({ ...editedTask, start_date: date })
                 }
               />
+              <TimeSelector
+                date={editedTask.start_date}
+                onChange={(date: string) =>
+                  setEditedTask({ ...editedTask, start_date: date })
+                }
+                className="mb-2"
+              />
             </>
             <>
               <p>End Date</p>
@@ -242,6 +316,13 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                   setEditedTask({ ...editedTask, end_date: date })
                 }
               />
+              <TimeSelector
+                date={editedTask.end_date}
+                onChange={(date: string) =>
+                  setEditedTask({ ...editedTask, end_date: date })
+                }
+                className="mb-2"
+              />
             </>
             <p>Tags</p>
             <Input
@@ -251,41 +332,6 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
               onChange={handleChange}
               className="mb-2"
             />
-            {/* <h3 className="font-bold mb-2">Subtasks</h3>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Completed</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {editedTask.subtasks.map((subtask) => (
-                  <TableRow key={subtask.subtask_id}>
-                    <TableCell>{subtask.title}</TableCell>
-                    <TableCell>
-                      <input
-                        type="checkbox"
-                        checked={subtask.is_completed}
-                        className="mb-1"
-                        onChange={(e) => {
-                          const updatedSubtasks = editedTask.subtasks.map(
-                            (st) =>
-                              st.subtask_id === subtask.subtask_id
-                                ? { ...st, is_completed: e.target.checked }
-                                : st
-                          );
-                          setEditedTask({
-                            ...editedTask,
-                            subtasks: updatedSubtasks,
-                          });
-                        }}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table> */}
           </DialogDescription>
           <DialogFooter>
             <Button onClick={handleOk} className="bg-blue-500 text-white">
