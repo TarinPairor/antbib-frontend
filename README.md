@@ -24,7 +24,7 @@ This project is a comprehensive task and meeting management system designed for 
    - I can view tasks in different statuses: To-Do, Developing, Done, and Overdue.
    - I can filter tasks by tags, priority, and dates.
 2. **Dashboard**:
-   - As a user I can view a large dashboard with a categorized list of tasks and meetings.
+   - As a user, I can view a large dashboard with a categorized list of tasks and meetings.
    - Tasks are tagged with statuses and display upcoming deadlines.
 3. **Notifications**:
    - I can receive notifications for new assignments and updates.
@@ -32,9 +32,9 @@ This project is a comprehensive task and meeting management system designed for 
 4. **Calendar View**:
    - I can visualize tasks in a calendar format and filter tasks by spaces or assignees.
 5. **Task Details**:
-   - I can lick on tasks to view and edit details such as title, description, status, tags, and assignees.
+   - I can click on tasks to view and edit details such as title, description, status, tags, and assignees.
 6. **Email Summary**:
-   - I can opy and paste email threads for AI-generated summaries.
+   - I can copy and paste email threads for AI-generated summaries.
 
 ---
 
@@ -43,7 +43,7 @@ This project is a comprehensive task and meeting management system designed for 
 1. `/` - Home Page:
    - Displays your todo, in-progress, and completed tasks.
    - Allows you to view all tasks.
-   - Allows you to view upcoming tasks.
+   - Allows you to view upcoming tasks (tasks with due dates/end dates coming up).
    - Allows you to view tasks filtered by tags.
 2. `/inbox` - Notifications Page:
    - Displays notifications for newly assigned tasks.
@@ -63,6 +63,10 @@ In the `/dashboard` page, you can create tasks by clicking on the `Create Task` 
 ### Updating Tasks
 
 In the `/dashboard` page, you can update tasks by clicking on the `Edit` button next to the task you want to update. You can then edit the task details and click on the `Ok` button to save the changes. If you assign someone to a task, they will receive a notification in their inbox.
+
+### Viewing Tasks
+
+On the home page `/`, you can view all of the tasks assigned to you. You can filter your task statuses at the top by toggling the tabs and seeing their relevant details.
 
 ## Database Schema
 
@@ -115,6 +119,7 @@ CREATE TABLE subtasks (
 - **Spaces**: Create separate spaces for individual subgroups.
 - **Task Assignment**: Allow tasks to be assigned to multiple users.
 - **Enhanced Filters**: Add more filters for tasks and calendar views.
-- **Calendar Integration**: Add a calendar integration for task visualization.
+- **Calendar Integration**: Add better calendar integration and UI for task visualization.
+- **Sub tasks**: Add subtasks for each task.
 
 Get the link to the project [here](https://antbib.vercel.app/)!
