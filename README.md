@@ -58,7 +58,7 @@ This project is a comprehensive task and meeting management system designed for 
 
 In the `/dashboard` page, you can create tasks by clicking on the `Create Task` button at the top of the screen. You can then fill in the task details, including the title, description, status, tags, start date, end date, priority, and assignee. Once you have filled in the details, you can click on the `Ok` button to create the task.
 
-- Tags: Tags are used to categorize tasks and make them easier to filter. You can add multiple tags to a task by separating them with commas ie `urgent, meeting`.
+- Tags: Tags are used to categorize tasks and make them easier to filter. You can add multiple tags to a task by separating them with commas ie `urgent,meeting`.
 
 ### Updating Tasks
 
