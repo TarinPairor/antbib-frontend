@@ -125,7 +125,8 @@ CREATE TABLE subtasks (
 - **Task Assignment**: Allow tasks to be assigned to multiple users.
 - **Enhanced Filters**: Add more filters for tasks and calendar views.
 - **Calendar Integration**: Add better calendar integration and UI for task visualization.
-- **Subtasks**: Add subtasks for each task.
+- **Subtasks**: Add functional subtasks for each task.
 - **Using email as an identifier**: Current using the backend randomly generated ID but it makes more sense to use the email account.
+- **Enhance searching functionality**: Allow users to more easily search for people to assign tasks to.
 
 Get the link to the project [here](https://antbib.vercel.app/)!
