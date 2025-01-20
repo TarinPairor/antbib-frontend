@@ -126,6 +126,6 @@ CREATE TABLE subtasks (
 - **Enhanced Filters**: Add more filters for tasks and calendar views.
 - **Calendar Integration**: Add better calendar integration and UI for task visualization.
 - **Subtasks**: Add subtasks for each task.
-- **Using email as an identifier"": Current using the backend randomly generated ID but it makes more sense to use the email account.
+- **Using email as an identifier**: Current using the backend randomly generated ID but it makes more sense to use the email account.
 
 Get the link to the project [here](https://antbib.vercel.app/)!
