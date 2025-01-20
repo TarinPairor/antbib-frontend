@@ -56,13 +56,13 @@ This project is a comprehensive task and meeting management system designed for 
 
 ### Creating Tasks
 
-In the `/dashboard` page, you can create tasks by clicking on the `Create Task` button at the top of the screen. You can then fill in the task details, including the title, description, status, tags, start date, end date, priority, and assignee. Once you have filled in the details, you can click on the `Ok` button to create the task.
+In the `/dashboard` page, you can create tasks by clicking on the `Create Task` button at the top of the screen. You can then fill in the task details, including the title, description, status, tags, start date, end date, priority, and assignee. Once you have filled in the details, you can click on the `Ok` button to create the task. You can only create tasks once signed in!
 
 - Tags: Tags are used to categorize tasks and make them easier to filter. You can add multiple tags to a task by separating them with commas ie `urgent,meeting`.
 
 ### Updating Tasks
 
-In the `/dashboard` page, you can update tasks by clicking on the `Edit` button next to the task you want to update. You can then edit the task details and click on the `Ok` button to save the changes. If you assign someone to a task, they will receive a notification in their inbox. You can also delete tasks by clicking the delete button.
+In the `/dashboard` page, you can update tasks by clicking on the `Edit` button next to the task you want to update. You can then edit the task details and click on the `Ok` button to save the changes. If you assign someone to a task, they will receive a notification in their inbox. You can also delete tasks by clicking the delete button. You can only edit tasks once signed in!
 
 ### Viewing Tasks
 
