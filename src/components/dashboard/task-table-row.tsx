@@ -179,6 +179,10 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    if (name === "tags" && !value) {
+      setEditedTask({ ...editedTask, tags: null });
+      return;
+    }
     setEditedTask({ ...editedTask, [name]: value });
   };
 
@@ -220,7 +224,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
             {task.status}
           </Badge>
         </TableCell>
-        <TableCell>{user?.username}</TableCell>
+        <TableCell>{textWithEllipsis(user?.user_email)}</TableCell>
         <TableCell>
           {task?.tags
             ?.split(",")
@@ -275,7 +279,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                     key={user.user_id}
                     value={user.user_id.toString()}
                   >
-                    {user.username}
+                    {user.user_email}
                   </SelectItem>
                 ))}
               </SelectContent>

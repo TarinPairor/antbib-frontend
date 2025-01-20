@@ -17,7 +17,10 @@ export function formatDateTime(date: string) {
   return d.toLocaleDateString("en-GB", options);
 }
 
-export function textWithEllipsis(text: string, maxLength: number = 15) {
+export function textWithEllipsis(
+  text: string | undefined,
+  maxLength: number = 15
+) {
   if (!text) return;
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + "...";

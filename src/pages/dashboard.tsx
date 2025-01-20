@@ -19,7 +19,7 @@ import TaskTableRow from "@/components/dashboard/task-table-row";
 import { useGetAllTasks } from "@/apis/tasks";
 import { useGetAllUsers, useGetUserByEmail } from "@/apis/users";
 import { fakeUsers } from "@/constants/constants";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -41,6 +41,88 @@ import { useUser } from "@clerk/clerk-react";
 import Typewriter, { TypewriterClass } from "typewriter-effect";
 import Centralizer from "@/components/centralizer";
 import LoadingSpinner from "@/components/loading-spinner";
+const TimeSelector = ({
+  date,
+  onChange,
+  className = "",
+}: {
+  date: string | null;
+  onChange: (date: string) => void;
+  className?: string;
+}) => {
+  // Initialize with current time if date is null
+  const timeDate = date ? new Date(date) : new Date();
+  const [hours, setHours] = React.useState(
+    timeDate.getHours().toString().padStart(2, "0")
+  );
+  const [minutes, setMinutes] = React.useState(
+    timeDate.getMinutes().toString().padStart(2, "0")
+  );
+  const [seconds, setSeconds] = React.useState(
+    timeDate.getSeconds().toString().padStart(2, "0")
+  );
+
+  const validateAndUpdateTime = (
+    value: string,
+    max: number,
+    setter: (value: string) => void
+  ) => {
+    let numValue = parseInt(value);
+    if (value === "") {
+      setter("00");
+      return;
+    }
+    if (isNaN(numValue)) return;
+
+    numValue = Math.max(0, Math.min(numValue, max));
+    setter(numValue.toString().padStart(2, "0"));
+
+    // If date is null, use current date as base
+    const newDate = date ? new Date(date) : new Date();
+    newDate.setHours(parseInt(hours), parseInt(minutes), parseInt(seconds));
+    onChange(newDate.toISOString());
+  };
+
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="flex items-center gap-1">
+        <Input
+          type="number"
+          min={0}
+          max={23}
+          value={hours}
+          onChange={(e) => validateAndUpdateTime(e.target.value, 23, setHours)}
+          className="w-16 text-center"
+          placeholder="HH"
+        />
+        <span className="text-gray-500">:</span>
+        <Input
+          type="number"
+          min={0}
+          max={59}
+          value={minutes}
+          onChange={(e) =>
+            validateAndUpdateTime(e.target.value, 59, setMinutes)
+          }
+          className="w-16 text-center"
+          placeholder="MM"
+        />
+        <span className="text-gray-500">:</span>
+        <Input
+          type="number"
+          min={0}
+          max={59}
+          value={seconds}
+          onChange={(e) =>
+            validateAndUpdateTime(e.target.value, 59, setSeconds)
+          }
+          className="w-16 text-center"
+          placeholder="SS"
+        />
+      </div>
+    </div>
+  );
+};
 
 export default function Dashboard() {
   const clerkUser = useUser().user;
@@ -203,7 +285,7 @@ export default function Dashboard() {
                     key={user.user_id}
                     value={user.user_id.toString()}
                   >
-                    {user.username}
+                    {user.user_email}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -223,7 +305,7 @@ export default function Dashboard() {
               </SelectContent>
             </Select>
             <>
-              <p>Start Date</p>
+              {/* <p>Start Date</p> */}
               <DatePicker
                 placeholder="Start Date"
                 defaultValue={newTask.start_date}
@@ -232,9 +314,16 @@ export default function Dashboard() {
                   setNewTask({ ...newTask, start_date: date })
                 }
               />
+              <TimeSelector
+                date={newTask.start_date}
+                onChange={(date: string) =>
+                  setNewTask({ ...newTask, start_date: date })
+                }
+                className="mb-2"
+              />
             </>
             <>
-              <p>End Date</p>
+              {/* <p>End Date</p> */}
               <DatePicker
                 placeholder="End Date"
                 defaultValue={newTask.end_date}
@@ -243,8 +332,15 @@ export default function Dashboard() {
                   setNewTask({ ...newTask, end_date: date })
                 }
               />
+              <TimeSelector
+                date={newTask.start_date}
+                onChange={(date: string) =>
+                  setNewTask({ ...newTask, start_date: date })
+                }
+                className="mb-2"
+              />
             </>
-            <p>Tags</p>
+            {/* <p>Tags</p> */}
             <Input
               name="tags"
               placeholder="Tags"
@@ -252,7 +348,7 @@ export default function Dashboard() {
               onChange={handleStatusChange}
               className="mb-2"
             />
-            <h3 className="font-bold mb-2">Subtasks</h3>
+            {/* <h3 className="font-bold mb-2">Subtasks</h3>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -261,7 +357,7 @@ export default function Dashboard() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* {newTask.subtasks.map((subtask, index) => (
+                {newTask.subtasks.map((subtask, index) => (
                   <TableRow key={index}>
                     <TableCell>{subtask.title}</TableCell>
                     <TableCell>
@@ -284,9 +380,9 @@ export default function Dashboard() {
                       />
                     </TableCell>
                   </TableRow>
-                ))} */}
+                ))}
               </TableBody>
-            </Table>
+            </Table> */}
           </DialogDescription>
           <DialogFooter>
             <Button onClick={handleOk} className="bg-blue-500 text-white">
