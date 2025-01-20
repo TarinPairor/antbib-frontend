@@ -62,11 +62,16 @@ In the `/dashboard` page, you can create tasks by clicking on the `Create Task` 
 
 ### Updating Tasks
 
-In the `/dashboard` page, you can update tasks by clicking on the `Edit` button next to the task you want to update. You can then edit the task details and click on the `Ok` button to save the changes. If you assign someone to a task, they will receive a notification in their inbox.
+In the `/dashboard` page, you can update tasks by clicking on the `Edit` button next to the task you want to update. You can then edit the task details and click on the `Ok` button to save the changes. If you assign someone to a task, they will receive a notification in their inbox. You can also delete tasks by clicking the delete button.
 
 ### Viewing Tasks
 
 On the home page `/`, you can view all of the tasks assigned to you. You can filter your task statuses at the top by toggling the tabs and seeing their relevant details.
+
+## Tech stack:
+**Frontend**: React Vite Typescript, TailwindCSS, ShadCN
+**Backend**: Express Typescript
+**Database**: Supabase
 
 ## Database Schema
 
@@ -120,6 +125,7 @@ CREATE TABLE subtasks (
 - **Task Assignment**: Allow tasks to be assigned to multiple users.
 - **Enhanced Filters**: Add more filters for tasks and calendar views.
 - **Calendar Integration**: Add better calendar integration and UI for task visualization.
-- **Sub tasks**: Add subtasks for each task.
+- **Subtasks**: Add subtasks for each task.
+- **Using email as an identifier"": Current using the backend randomly generated ID but it makes more sense to use the email account.
 
 Get the link to the project [here](https://antbib.vercel.app/)!
