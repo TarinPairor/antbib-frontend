@@ -190,10 +190,6 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
     setEditedTask({ ...editedTask, status: value });
   };
 
-  const handleAssigneeChange = (value: string) => {
-    setEditedTask({ ...editedTask, assigned_to: parseInt(value) });
-  };
-
   // const handleTimeChange = (
   //   e: React.ChangeEvent<HTMLInputElement>,
   //   dateType: "start_date" | "end_date"
@@ -269,10 +265,12 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
             />
             <p>Assigned To</p>
             <Select
-              defaultValue={task?.assigned_to?.toString()}
-              onValueChange={handleAssigneeChange}
+              defaultValue={editedTask.assigned_to.toString()}
+              onValueChange={(value) =>
+                setEditedTask({ ...editedTask, assigned_to: parseInt(value) })
+              }
             >
-              <SelectTrigger>{user?.username}</SelectTrigger>
+              <SelectTrigger>{editedTask.assigned_to}</SelectTrigger>
               <SelectContent>
                 {allUsers?.map((user) => (
                   <SelectItem
@@ -297,7 +295,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
               </SelectContent>
             </Select>
             <>
-              <p>Start Date</p>
+              {/* <p>Start Date</p> */}
               <DatePicker
                 placeholder="Start Date"
                 defaultValue={editedTask.start_date}
@@ -315,7 +313,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
               />
             </>
             <>
-              <p>End Date</p>
+              {/* <p>End Date</p> */}
               <DatePicker
                 placeholder="End Date"
                 defaultValue={editedTask.end_date}
@@ -332,7 +330,7 @@ export default function TaskTableRow({ task }: TaskTableRowProps) {
                 className="mb-2"
               />
             </>
-            <p>Tags</p>
+            {/* <p>Tags</p> */}
             <Input
               name="tags"
               placeholder="Tags"
