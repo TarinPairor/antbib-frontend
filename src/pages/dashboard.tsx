@@ -298,6 +298,7 @@ export default function Dashboard() {
               value={newTask.title}
               onChange={handleStatusChange}
               className="mb-2"
+              required
             />
             <Textarea
               name="description"
@@ -306,6 +307,7 @@ export default function Dashboard() {
               value={newTask.description}
               onChange={handleStatusChange}
               className="mb-2"
+              required
             />
             <p>Assign To</p>
             <Select

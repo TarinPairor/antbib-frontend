@@ -10,7 +10,7 @@ This project is a comprehensive task and meeting management system designed for 
 
 ### Core Features
 
-1. **Task Scheduling**: Arrange tasks or meetings with authors, publishers, and event partners.
+1. **Task Scheduling**: Arrange tasks with authors, publishers, and event partners.
 2. **Send Follow-Ups**: Send follow-up tasks to collaborators or team members post-meetings.
 3. **Reminders and Notifications**: Automate reminders when you are assigned a task or when a deadline is approaching.
 4. **Email Thread Summaries**: Generate concise summaries of email discussions for efficient decision-making.
@@ -69,6 +69,7 @@ In the `/dashboard` page, you can update tasks by clicking on the `Edit` button 
 On the home page `/`, you can view all of the tasks assigned to you. You can filter your task statuses at the top by toggling the tabs and seeing their relevant details.
 
 ## Tech stack:
+
 **Frontend**: React Vite Typescript, TailwindCSS, ShadCN
 **Backend**: Express Typescript
 **Database**: Supabase
