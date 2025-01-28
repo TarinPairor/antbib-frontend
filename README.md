@@ -13,7 +13,7 @@ This project is a comprehensive task and meeting management system designed for 
 1. **Task Scheduling**: Arrange tasks with authors, publishers, and event partners.
 2. **Send Follow-Ups**: Send follow-up tasks to collaborators or team members post-meetings.
 3. **Reminders and Notifications**: Automate reminders when you are assigned a task or when a deadline is approaching.
-4. **Email Thread Summaries**: Generate concise summaries of email discussions for efficient decision-making.
+4. **Email Thread Summaries**: Generate concise summaries of email discussions formatted as a table for efficient decision-making.
 
 ---
 
