@@ -130,4 +130,4 @@ CREATE TABLE subtasks (
 - **Using email as an identifier**: Current using the backend randomly generated ID but it makes more sense to use the email account.
 - **Enhance searching functionality**: Allow users to more easily search for people to assign tasks to.
 
-Get the link to the project [here](https://antbib.vercel.app/)!
+Get the link to the project over [here](https://antbib.vercel.app/)!
